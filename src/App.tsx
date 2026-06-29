@@ -282,72 +282,103 @@ function HomePage() {
               <p className="text-slate-600 max-w-[1000px] mx-auto text-[17px] font-normal">Showcasing our work across event production, media, and immersive brand experiences.</p>
             </div>
             <div className="space-y-32">
-              <PortfolioItem 
-                id="organizer"
-                title="Event Organizer" 
-                description="We manage large-scale events from concept to execution, covering concerts, festivals, corporate events, and conferences. We bring your vision to life with precision and creativity."
-                images={[
-                  "/Event Organizer_1-1.jpeg",
-                  "/Event Organizer_7-1.jpeg",
-                  "/Event Organizer_6-1.jpeg",
-                  "/Event Organizer_5-1.jpeg",
-                  "/Event Organizer_3-1.jpeg",
-                  "/Event Organizer_4-1.jpeg",
-                  "/Event Organizer_2-1.jpeg",
-                  "/Event Organizer_8-1.jpeg"
-                ]} 
-                delay={0.1} 
-                primaryButtonText="View Projects"
-                showSecondaryButton={false}
-                link="/event-organizer"
-              />
-              <PortfolioItem 
-                id="organizer-novel"
-                title="มหกรรมนิยายนานาชาติ 2025" 
-                badge="BOOK EXPO & FESTIVAL"
-                description="Large-scale book exhibition and interactive fan experience, featuring custom-themed stages, publisher booths, and immersive reader zones."
-                images={[
-                  "/images/projects/novel-1.jpg",
-                  "/images/projects/novel-2.jpg",
-                  "/images/projects/novel-3.jpg"
-                ]} 
-                delay={0.15} 
-                primaryButtonText="View Projects"
-                showSecondaryButton={false}
-                link="/event-organizer"
-                reverse
-              />
-              <PortfolioItem 
-                id="organizer-fenty"
-                title="Fenty Skin" 
-                badge="BRAND LAUNCH & BOOTH SETUP"
-                description="Premium cosmetic display booth featuring clean minimalist aesthetics, interactive product trial zones, and elegant neon-lit photography backdrops."
-                images={[
-                  "/images/projects/fenty-1.jpg",
-                  "/images/projects/fenty-2.jpg",
-                  "/images/projects/fenty-3.jpg"
-                ]} 
-                delay={0.2} 
-                primaryButtonText="View Projects"
-                showSecondaryButton={false}
-                link="/event-organizer"
-              />
-              <PortfolioItem 
-                id="organizer-hirono"
-                title="Hirono @ Siam Square" 
-                badge="POP-UP STORE & EXHIBITION"
-                description="Art toys pop-up exhibition in Siam Square, featuring giant character installations, custom concrete-style architectural structures, and fan experiential galleries."
-                images={[
-                  "/images/projects/hirono-1.jpg",
-                  "/images/projects/hirono-2.jpg",
-                  "/images/projects/hirono-3.jpg"
-                ]} 
-                delay={0.25} 
-                primaryButtonText="View Projects"
-                showSecondaryButton={false}
-                link="/event-organizer"
-                reverse
-              />
+              {/* Event Organizer Section Container */}
+              <div className="space-y-16">
+                <PortfolioItem 
+                  id="organizer"
+                  title="Event Organizer" 
+                  description="We manage large-scale events from concept to execution, covering concerts, festivals, corporate events, and conferences. We bring your vision to life with precision and creativity."
+                  images={[
+                    "/Event Organizer_1-1.jpeg",
+                    "/Event Organizer_7-1.jpeg",
+                    "/Event Organizer_6-1.jpeg",
+                    "/Event Organizer_5-1.jpeg",
+                    "/Event Organizer_3-1.jpeg",
+                    "/Event Organizer_4-1.jpeg",
+                    "/Event Organizer_2-1.jpeg",
+                    "/Event Organizer_8-1.jpeg"
+                  ]} 
+                  delay={0.1} 
+                  primaryButtonText="View Projects"
+                  showSecondaryButton={false}
+                  link="/event-organizer"
+                />
+                
+                {/* Inner Projects Row */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-slate-200/30">
+                  {/* Novel Expo */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="space-y-4"
+                  >
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2 py-0.5 rounded-full border border-sky-500/20">
+                      BOOK EXPO & FESTIVAL
+                    </span>
+                    <h4 className="text-xl font-bold text-slate-900">มหกรรมนิยายนานาชาติ 2025</h4>
+                    <p className="text-slate-500 text-sm leading-relaxed min-h-[4rem]">
+                      Large-scale book exhibition and interactive fan experience, featuring custom-themed stages and publisher booths.
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg"].map((img, i) => (
+                        <div key={i} className="aspect-square rounded-2xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
+                          <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  {/* Fenty Skin */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="space-y-4"
+                  >
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2 py-0.5 rounded-full border border-sky-500/20">
+                      BRAND LAUNCH & BOOTH SETUP
+                    </span>
+                    <h4 className="text-xl font-bold text-slate-900">Fenty Skin</h4>
+                    <p className="text-slate-500 text-sm leading-relaxed min-h-[4rem]">
+                      Premium cosmetic display booth featuring clean minimalist aesthetics and interactive product trial zones.
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg"].map((img, i) => (
+                        <div key={i} className="aspect-square rounded-2xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
+                          <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  {/* Hirono */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="space-y-4"
+                  >
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2 py-0.5 rounded-full border border-sky-500/20">
+                      POP-UP STORE & EXHIBITION
+                    </span>
+                    <h4 className="text-xl font-bold text-slate-900">Hirono @ Siam Square</h4>
+                    <p className="text-slate-500 text-sm leading-relaxed min-h-[4rem]">
+                      Art toys pop-up exhibition in Siam Square, featuring giant installations and custom experiential galleries.
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg"].map((img, i) => (
+                        <div key={i} className="aspect-square rounded-2xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
+                          <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
               <PortfolioItem 
                 id="supply"
                 title="Event Supply" 
