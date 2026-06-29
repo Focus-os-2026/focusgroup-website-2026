@@ -43,9 +43,9 @@ function ProjectSection({
           )}
         </div>
         
-        {/* 6 Image Grid */}
+        {/* 3 Image Grid */}
         <div className="w-full lg:w-3/4">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-3 gap-4 md:gap-6">
             {images.map((img, idx) => (
               <div 
                 key={idx} 
@@ -149,10 +149,7 @@ export default function EventOrganizerPage() {
               images={[
                 "/images/projects/novel-1.jpg",
                 "/images/projects/novel-2.jpg",
-                "/images/projects/novel-3.jpg",
-                "/images/projects/novel-4.jpg",
-                "/images/projects/novel-5.jpg",
-                "/images/projects/novel-6.jpg"
+                "/images/projects/novel-3.jpg"
               ]}
               onImageClick={openLightbox}
               delay={0.1}
@@ -165,10 +162,7 @@ export default function EventOrganizerPage() {
               images={[
                 "/images/projects/fenty-1.jpg",
                 "/images/projects/fenty-2.jpg",
-                "/images/projects/fenty-3.jpg",
-                "/images/projects/fenty-4.jpg",
-                "/images/projects/fenty-5.jpg",
-                "/images/projects/fenty-6.jpg"
+                "/images/projects/fenty-3.jpg"
               ]}
               onImageClick={openLightbox}
               delay={0.2}
@@ -181,10 +175,7 @@ export default function EventOrganizerPage() {
               images={[
                 "/images/projects/hirono-1.jpg",
                 "/images/projects/hirono-2.jpg",
-                "/images/projects/hirono-3.jpg",
-                "/images/projects/hirono-4.jpg",
-                "/images/projects/hirono-5.jpg",
-                "/images/projects/hirono-6.jpg"
+                "/images/projects/hirono-3.jpg"
               ]}
               onImageClick={openLightbox}
               delay={0.3}
