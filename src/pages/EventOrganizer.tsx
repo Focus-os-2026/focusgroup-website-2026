@@ -1,70 +1,105 @@
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowLeft, CheckCircle2, Calendar, Users, MapPin, Zap, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, Zap, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function ProjectGalleryBox({ title, images, delay }: { title: string, images: string[], delay: number }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 4000 + Math.random() * 2000); // Randomize slightly for visual variety
-    return () => clearInterval(timer);
-  }, [images.length]);
-
+function ProjectSection({ 
+  title, 
+  category, 
+  images, 
+  description, 
+  onImageClick, 
+  delay 
+}: { 
+  title: string, 
+  category: string, 
+  images: string[],
+  description?: string,
+  onImageClick: (images: string[], index: number) => void,
+  delay: number
+}) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
-      className="group relative overflow-hidden rounded-3xl aspect-square bg-slate-200 shadow-lg cursor-pointer"
+      transition={{ duration: 0.6, delay }}
+      className="py-16 border-b border-slate-200 last:border-b-0"
     >
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={currentIndex}
-          src={images[currentIndex]}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.8 }}
-          className="absolute inset-0 w-full h-full object-cover"
-          referrerPolicy="no-referrer"
-        />
-      </AnimatePresence>
-      
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
-      
-      {/* Title */}
-      <div className="absolute bottom-0 left-0 p-6 z-10">
-        <h4 className="text-white font-bold text-lg md:text-xl leading-tight group-hover:text-sky-400 transition-colors">
-          {title}
-        </h4>
-        <div className="w-8 h-1 bg-sky-500 mt-2 rounded-full group-hover:w-16 transition-all duration-300" />
-      </div>
-
-      {/* Navigation Indicators */}
-      <div className="absolute top-4 right-4 flex gap-1 z-10">
-        {images.map((_, i) => (
-          <div 
-            key={i} 
-            className={`h-1 rounded-full transition-all duration-300 ${
-              i === currentIndex ? "w-4 bg-white" : "w-1 bg-white/40"
-            }`} 
-          />
-        ))}
+      <div className="flex flex-col lg:flex-row gap-12 items-start">
+        {/* Text Info */}
+        <div className="w-full lg:w-1/4 space-y-4">
+          <span className="inline-block text-xs font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
+            {category}
+          </span>
+          <h3 className="text-3xl font-extrabold text-slate-900 leading-tight">
+            {title}
+          </h3>
+          {description && (
+            <p className="text-slate-500 text-sm md:text-base leading-relaxed">
+              {description}
+            </p>
+          )}
+        </div>
+        
+        {/* 6 Image Grid */}
+        <div className="w-full lg:w-3/4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {images.map((img, idx) => (
+              <div 
+                key={idx} 
+                className="aspect-square overflow-hidden rounded-3xl bg-slate-100 shadow-sm border border-slate-200/50 group cursor-zoom-in relative"
+                onClick={() => onImageClick(images, idx)}
+              >
+                <img 
+                  src={img} 
+                  alt={`${title} - ${idx + 1}`} 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </motion.div>
   );
 }
 
 export default function EventOrganizerPage() {
+  const [activeProjectImages, setActiveProjectImages] = useState<string[]>([]);
+  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const openLightbox = (images: string[], index: number) => {
+    setActiveProjectImages(images);
+    setActiveImageIndex(index);
+  };
+
+  const closeLightbox = () => {
+    setActiveImageIndex(null);
+  };
+
+  const nextImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (activeImageIndex !== null) {
+      setActiveImageIndex((prev) => (prev! + 1) % activeProjectImages.length);
+    }
+  };
+
+  const prevImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (activeImageIndex !== null) {
+      setActiveImageIndex((prev) => (prev! - 1 + activeProjectImages.length) % activeProjectImages.length);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F2F0EB] text-slate-900 font-sans">
@@ -78,14 +113,16 @@ export default function EventOrganizerPage() {
           <div className="text-xl font-black tracking-tighter">
             FOCUSGROUP<span className="text-sky-600">STUDIO</span>
           </div>
-          <Button className="bg-slate-900 text-white rounded-full px-6">Contact Us</Button>
+          <a href="https://lin.ee/PEIHMBM" target="_blank" rel="noopener noreferrer">
+            <Button className="bg-slate-900 text-white rounded-full px-6 hover:bg-slate-800 transition-colors">Contact Us</Button>
+          </a>
         </div>
       </nav>
 
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
           {/* Hero Section */}
-          <div className="max-w-4xl mb-20">
+          <div className="max-w-4xl mb-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -97,63 +134,61 @@ export default function EventOrganizerPage() {
               <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
                 Event Organizer
               </h1>
-              <p className="text-2xl text-slate-600 leading-relaxed">
+              <p className="text-xl md:text-2xl text-slate-600 leading-relaxed">
                 We manage large-scale events from concept to execution, covering concerts, festivals, corporate events, and conferences. We bring your vision to life with precision and creativity.
               </p>
             </motion.div>
           </div>
 
-          {/* Project Showcase - 8 Boxes */}
-          <div className="mb-32">
-            <div className="flex items-end justify-between mb-12">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">Recent Projects</h2>
-                <p className="text-slate-600 max-w-xl">A glimpse into some of our most successful event productions and creative executions.</p>
-              </div>
-              <div className="hidden md:flex gap-2">
-                <Button variant="outline" size="icon" className="rounded-full border-slate-300"><ChevronLeft className="w-4 h-4" /></Button>
-                <Button variant="outline" size="icon" className="rounded-full border-slate-300"><ChevronRight className="w-4 h-4" /></Button>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              <ProjectGalleryBox 
-                title="มหกรรมนิยายนานาชาติ 2025" 
-                images={[
-                  "/Event Organizer_1.jpeg",
-                  "/Event Organizer_2.jpeg",
-                  "/Event Organizer_3.jpeg",
-                  "/Event Organizer_4.jpeg",
-                  "/Event Organizer_5.jpeg",
-                  "/Event Organizer_6.jpeg"
-                ]} 
-                delay={0.1} 
-              />
-              <ProjectGalleryBox 
-                title="Fenty Skin" 
-                images={[
-                  "/fenty-1.jpg",
-                  "/Event Organizer_1.jpeg",
-                  "/Event Organizer_2.jpeg",
-                  "/Event Organizer_3.jpeg",
-                  "/Event Organizer_4.jpeg",
-                  "/Event Organizer_5.jpeg"
-                ]} 
-                delay={0.2} 
-              />
-              <ProjectGalleryBox 
-                title="Hirono @ Siam Square" 
-                images={[
-                  "/hirono-1.jpg",
-                  "/hirono-2.jpg",
-                  "/hirono-3.jpg",
-                  "/hirono-4.jpg",
-                  "/Event Organizer_7.jpeg",
-                  "/Event Organizer_8.jpeg"
-                ]} 
-                delay={0.3} 
-              />
-            </div>
+          {/* Project Sections List */}
+          <div className="space-y-12 mb-20">
+            <ProjectSection 
+              title="มหกรรมนิยายนานาชาติ 2025"
+              category="Book Expo & Festival"
+              description="Large-scale book exhibition and interactive fan experience, featuring custom-themed stages, publisher booths, and immersive reader zones."
+              images={[
+                "/images/projects/novel-1.jpg",
+                "/images/projects/novel-2.jpg",
+                "/images/projects/novel-3.jpg",
+                "/images/projects/novel-4.jpg",
+                "/images/projects/novel-5.jpg",
+                "/images/projects/novel-6.jpg"
+              ]}
+              onImageClick={openLightbox}
+              delay={0.1}
+            />
+
+            <ProjectSection 
+              title="Fenty Skin"
+              category="Brand Launch & Booth Setup"
+              description="Premium cosmetic display booth featuring clean minimalist aesthetics, interactive product trial zones, and elegant neon-lit photography backdrops."
+              images={[
+                "/images/projects/fenty-1.jpg",
+                "/images/projects/fenty-2.jpg",
+                "/images/projects/fenty-3.jpg",
+                "/images/projects/fenty-4.jpg",
+                "/images/projects/fenty-5.jpg",
+                "/images/projects/fenty-6.jpg"
+              ]}
+              onImageClick={openLightbox}
+              delay={0.2}
+            />
+
+            <ProjectSection 
+              title="Hirono @ Siam Square"
+              category="Pop-up Store & Exhibition"
+              description="Art toys pop-up exhibition in Siam Square, featuring giant character installations, custom concrete-style architectural structures, and fan experiential galleries."
+              images={[
+                "/images/projects/hirono-1.jpg",
+                "/images/projects/hirono-2.jpg",
+                "/images/projects/hirono-3.jpg",
+                "/images/projects/hirono-4.jpg",
+                "/images/projects/hirono-5.jpg",
+                "/images/projects/hirono-6.jpg"
+              ]}
+              onImageClick={openLightbox}
+              delay={0.3}
+            />
           </div>
         </div>
       </main>
@@ -164,6 +199,63 @@ export default function EventOrganizerPage() {
           <p className="text-slate-500">© 2026 FOCUSGROUP STUDIO. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* Fullscreen Lightbox Modal */}
+      <AnimatePresence>
+        {activeImageIndex !== null && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 backdrop-blur-md"
+            onClick={closeLightbox}
+          >
+            {/* Close Button */}
+            <button 
+              className="absolute top-6 right-6 text-white hover:text-sky-400 p-2 transition-colors cursor-pointer"
+              onClick={closeLightbox}
+            >
+              <X className="w-8 h-8" />
+            </button>
+
+            {/* Navigation Buttons */}
+            <button 
+              className="absolute left-6 text-white hover:text-sky-400 p-3 bg-white/5 hover:bg-white/10 rounded-full transition-all cursor-pointer"
+              onClick={prevImage}
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+            <button 
+              className="absolute right-6 text-white hover:text-sky-400 p-3 bg-white/5 hover:bg-white/10 rounded-full transition-all cursor-pointer"
+              onClick={nextImage}
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+
+            {/* Lightbox Image */}
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="max-w-4xl max-h-[80vh] flex flex-col items-center relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img 
+                src={activeProjectImages[activeImageIndex]} 
+                alt="Enlarged gallery view" 
+                className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+              
+              {/* Indicator */}
+              <p className="text-center text-slate-400 text-sm mt-4 tracking-wider">
+                {activeImageIndex + 1} / {activeProjectImages.length}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
