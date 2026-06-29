@@ -335,8 +335,8 @@ function HomePage() {
               <p className="text-slate-600 max-w-[1000px] mx-auto text-[17px] font-normal">Showcasing our work across event production, media, and immersive brand experiences.</p>
             </div>
             <div className="space-y-16 md:space-y-24">
-              {/* Event Organizer Section Container */}
-              <div className="space-y-16">
+              {/* Event Organizer Section Container (Entirely wrapped in a Dark Card Container) */}
+              <div className="bg-slate-950 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-12 border border-slate-800/80 shadow-2xl shadow-slate-950/20 space-y-12">
                 <PortfolioItem 
                   id="organizer"
                   title="Event Organizer" 
@@ -355,10 +355,11 @@ function HomePage() {
                   primaryButtonText="View Projects"
                   showSecondaryButton={false}
                   link="/event-organizer"
+                  darkTheme
                 />
                 
-                {/* Inner Projects List (Stacked Vertically inside Dark Container Card) */}
-                <div className="bg-slate-950 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 border border-slate-800/80 shadow-2xl shadow-slate-950/20 flex flex-col gap-4 mt-8">
+                {/* Inner Projects List (Stacked Vertically) */}
+                <div className="flex flex-col gap-4 pt-12 border-t border-slate-800/50">
                   {/* Novel Expo */}
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
@@ -877,7 +878,7 @@ function StatItem({ value, label }: { value: string, label: string }) {
   );
 }
 
-function PortfolioItem({ title, description, images, videos, youtubeIds, delay, reverse = false, primaryButtonText = "View Case Study", showSecondaryButton = true, link, id, badge }: { 
+function PortfolioItem({ title, description, images, videos, youtubeIds, delay, reverse = false, primaryButtonText = "View Case Study", showSecondaryButton = true, link, id, badge, darkTheme }: { 
   title: string, 
   description: string, 
   images: string[], 
@@ -889,7 +890,8 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
   showSecondaryButton?: boolean,
   link?: string,
   id?: string,
-  badge?: string
+  badge?: string,
+  darkTheme?: boolean
 }) {
   return (
     <motion.div
@@ -903,13 +905,13 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
       {/* Content Side */}
       <div className="w-full lg:w-[30%] space-y-8">
         <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-600 text-xs font-bold uppercase tracking-widest">
+          <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border ${darkTheme ? 'bg-sky-500/10 border-sky-500/20 text-sky-400' : 'bg-sky-500/10 border-sky-500/20 text-sky-600'} text-xs font-bold uppercase tracking-widest`}>
             <Zap className="w-3 h-3" /> {badge || "CORE SERVICE"}
           </div>
-          <h3 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
+          <h3 className={`text-4xl md:text-5xl font-bold leading-tight ${darkTheme ? 'text-white' : 'text-slate-900'}`}>
             {title}
           </h3>
-          <p className="text-[15px] text-slate-600 leading-relaxed max-w-xl">
+          <p className={`text-[15px] leading-relaxed max-w-xl ${darkTheme ? 'text-slate-400' : 'text-slate-600'}`}>
             {description}
           </p>
         </div>
@@ -917,18 +919,18 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
         <div className="flex flex-wrap gap-4 pt-4">
           {link ? (
             <Link to={link}>
-              <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-8 h-12">
+              <Button className={`${darkTheme ? 'bg-white hover:bg-slate-100 text-slate-950' : 'bg-slate-900 hover:bg-slate-800 text-white'} rounded-full px-8 h-12`}>
                 {primaryButtonText}
               </Button>
             </Link>
           ) : (
-            <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-8 h-12">
+            <Button className={`${darkTheme ? 'bg-white hover:bg-slate-100 text-slate-950' : 'bg-slate-900 hover:bg-slate-800 text-white'} rounded-full px-8 h-12`}>
               {primaryButtonText}
             </Button>
           )}
           {showSecondaryButton && (
             <a href="https://lin.ee/PEIHMBM" target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className="border-slate-200 text-slate-900 hover:bg-slate-50 rounded-full px-8 h-12">
+              <Button variant="outline" className={`${darkTheme ? 'border-slate-800 text-white hover:bg-white/5' : 'border-slate-200 text-slate-900 hover:bg-slate-50'} rounded-full px-8 h-12`}>
                 Get a Quote
               </Button>
             </a>
