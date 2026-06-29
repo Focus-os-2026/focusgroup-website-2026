@@ -324,9 +324,9 @@ function HomePage() {
                       </p>
                     </div>
                     <div className="w-full lg:w-[80%]">
-                      <div className="grid grid-cols-3 gap-3">
+                      <div className="rounded-2xl overflow-hidden border border-slate-200/50 shadow-md grid grid-cols-3 gap-0 bg-slate-100">
                         {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-square rounded-xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
+                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer">
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                           </div>
                         ))}
@@ -352,9 +352,9 @@ function HomePage() {
                       </p>
                     </div>
                     <div className="w-full lg:w-[80%]">
-                      <div className="grid grid-cols-3 gap-3">
+                      <div className="rounded-2xl overflow-hidden border border-slate-200/50 shadow-md grid grid-cols-3 gap-0 bg-slate-100">
                         {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-square rounded-xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
+                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer">
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                           </div>
                         ))}
@@ -380,9 +380,9 @@ function HomePage() {
                       </p>
                     </div>
                     <div className="w-full lg:w-[80%]">
-                      <div className="grid grid-cols-3 gap-3">
+                      <div className="rounded-2xl overflow-hidden border border-slate-200/50 shadow-md grid grid-cols-3 gap-0 bg-slate-100">
                         {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-square rounded-xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
+                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer">
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                           </div>
                         ))}
