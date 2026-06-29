@@ -358,7 +358,7 @@ function HomePage() {
                 />
                 
                 {/* Inner Projects List (Stacked Vertically) */}
-                <div className="flex flex-col gap-12 pt-8 border-t border-slate-200/30">
+                <div className="flex flex-col gap-8 pt-8 border-t border-slate-200/30">
                   {/* Novel Expo */}
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
@@ -379,7 +379,7 @@ function HomePage() {
                     <div className="w-full lg:w-[80%]">
                       <div className="rounded-2xl overflow-hidden border border-slate-200/50 shadow-md grid grid-cols-3 gap-0 bg-slate-100">
                         {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(novelImages, i)}>
+                          <div key={i} className="aspect-[4/3] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(novelImages, i)}>
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                               <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
@@ -410,7 +410,7 @@ function HomePage() {
                     <div className="w-full lg:w-[80%]">
                       <div className="rounded-2xl overflow-hidden border border-slate-200/50 shadow-md grid grid-cols-3 gap-0 bg-slate-100">
                         {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(fentyImages, i)}>
+                          <div key={i} className="aspect-[4/3] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(fentyImages, i)}>
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                               <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
@@ -441,7 +441,7 @@ function HomePage() {
                     <div className="w-full lg:w-[80%]">
                       <div className="rounded-2xl overflow-hidden border border-slate-200/50 shadow-md grid grid-cols-3 gap-0 bg-slate-100">
                         {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(hironoImages, i)}>
+                          <div key={i} className="aspect-[4/3] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(hironoImages, i)}>
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                               <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
