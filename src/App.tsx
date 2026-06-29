@@ -287,14 +287,15 @@ function HomePage() {
                 title="Event Organizer" 
                 description="We manage large-scale events from concept to execution, covering concerts, festivals, corporate events, and conferences. We bring your vision to life with precision and creativity."
                 images={[
-                  "/Event Organizer_1-1.jpeg",
-                  "/Event Organizer_7-1.jpeg",
-                  "/Event Organizer_6-1.jpeg",
-                  "/Event Organizer_5-1.jpeg",
-                  "/Event Organizer_3-1.jpeg",
-                  "/Event Organizer_4-1.jpeg",
-                  "/Event Organizer_2-1.jpeg",
-                  "/Event Organizer_8-1.jpeg"
+                  "/images/projects/novel-1.jpg",
+                  "/images/projects/novel-2.jpg",
+                  "/images/projects/novel-3.jpg",
+                  "/images/projects/fenty-1.jpg",
+                  "/images/projects/fenty-2.jpg",
+                  "/images/projects/fenty-3.jpg",
+                  "/images/projects/hirono-1.jpg",
+                  "/images/projects/hirono-2.jpg",
+                  "/images/projects/hirono-3.jpg"
                 ]} 
                 delay={0.1} 
                 primaryButtonText="View Projects"
@@ -722,7 +723,7 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
 
       {/* Grid/Video Side */}
       <div className="w-full lg:w-[70%]">
-        <div className={`rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-300/50 bg-slate-100 ${youtubeIds && youtubeIds.length > 0 ? (youtubeIds.length > 1 ? 'grid grid-cols-1 md:grid-cols-2 gap-0' : 'aspect-video') : 'grid grid-cols-2 sm:grid-cols-4 gap-0'}`}>
+        <div className={`rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-300/50 bg-slate-100 ${youtubeIds && youtubeIds.length > 0 ? (youtubeIds.length > 1 ? 'grid grid-cols-1 md:grid-cols-2 gap-0' : 'aspect-video') : (images.length === 9 ? 'grid grid-cols-3 gap-0' : 'grid grid-cols-2 sm:grid-cols-4 gap-0')}`}>
           {youtubeIds && youtubeIds.length > 0 ? (
             youtubeIds.map((id, i) => (
               <div key={i} className="aspect-video">
@@ -756,7 +757,7 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
               </motion.div>
             ))
           ) : (
-            images.slice(0, 8).map((img, i) => (
+            images.map((img, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.8 }}
