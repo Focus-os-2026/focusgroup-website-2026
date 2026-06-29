@@ -358,7 +358,7 @@ function HomePage() {
                 />
                 
                 {/* Inner Projects List (Stacked Vertically inside Dark Container Card) */}
-                <div className="bg-slate-950 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 border border-slate-800/80 shadow-2xl shadow-slate-950/20 flex flex-col gap-6 mt-8">
+                <div className="bg-slate-950 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 border border-slate-800/80 shadow-2xl shadow-slate-950/20 flex flex-col gap-4 mt-8">
                   {/* Novel Expo */}
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
