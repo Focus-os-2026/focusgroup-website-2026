@@ -371,8 +371,8 @@ function HomePage() {
                       <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
                         BOOK EXPO & FESTIVAL
                       </span>
-                      <h4 className="text-xl font-bold text-slate-900 leading-tight">มหกรรมนิยายนานาชาติ 2025</h4>
-                      <p className="text-slate-500 text-sm leading-relaxed">
+                      <h4 className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight">มหกรรมนิยาย<br />นานาชาติ 2025</h4>
+                      <p className="text-slate-400 text-xs leading-relaxed">
                         Large-scale book exhibition and reader experience, featuring custom stages, photo landmarks, and publisher booths.
                       </p>
                     </div>
@@ -402,8 +402,8 @@ function HomePage() {
                       <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
                         BRAND LAUNCH & BOOTH SETUP
                       </span>
-                      <h4 className="text-xl font-bold text-slate-900 leading-tight">Fenty Skin</h4>
-                      <p className="text-slate-500 text-sm leading-relaxed">
+                      <h4 className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight">Fenty Skin</h4>
+                      <p className="text-slate-400 text-xs leading-relaxed">
                         Premium cosmetic exhibition booth featuring elegant minimalist structures, interactive trials, and photography backdrops.
                       </p>
                     </div>
@@ -433,8 +433,8 @@ function HomePage() {
                       <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
                         POP-UP STORE & EXHIBITION
                       </span>
-                      <h4 className="text-xl font-bold text-slate-900 leading-tight">Hirono @ Siam Square</h4>
-                      <p className="text-slate-500 text-sm leading-relaxed">
+                      <h4 className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight">Hirono @ Siam Square</h4>
+                      <p className="text-slate-400 text-xs leading-relaxed">
                         Art toys pop-up exhibition in Siam Square, featuring character installations, concrete architectures, and fan galleries.
                       </p>
                     </div>
