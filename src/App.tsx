@@ -312,23 +312,25 @@ function HomePage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="space-y-4"
+                    className="flex flex-col lg:flex-row gap-8 items-start"
                   >
-                    <div>
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20 mb-2">
+                    <div className="w-full lg:w-[20%] space-y-3 shrink-0">
+                      <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
                         BOOK EXPO & FESTIVAL
                       </span>
-                      <h4 className="text-xl font-bold text-slate-900">มหกรรมนิยายนานาชาติ 2025</h4>
+                      <h4 className="text-xl font-bold text-slate-900 leading-tight">มหกรรมนิยายนานาชาติ 2025</h4>
+                      <p className="text-slate-500 text-sm leading-relaxed">
+                        Large-scale book exhibition and reader experience, featuring custom stages, photo landmarks, and publisher booths.
+                      </p>
                     </div>
-                    <p className="text-slate-500 text-sm leading-relaxed max-w-2xl">
-                      Large-scale book exhibition and interactive reader experience, featuring custom stages, photo landmarks, and publisher booths.
-                    </p>
-                    <div className="grid grid-cols-3 gap-3 max-w-3xl">
-                      {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg"].map((img, i) => (
-                        <div key={i} className="aspect-square rounded-xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
-                          <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
-                        </div>
-                      ))}
+                    <div className="w-full lg:w-[80%]">
+                      <div className="grid grid-cols-3 gap-3">
+                        {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg"].map((img, i) => (
+                          <div key={i} className="aspect-square rounded-xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
+                            <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </motion.div>
 
@@ -338,23 +340,25 @@ function HomePage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="space-y-4"
+                    className="flex flex-col lg:flex-row gap-8 items-start"
                   >
-                    <div>
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20 mb-2">
+                    <div className="w-full lg:w-[20%] space-y-3 shrink-0">
+                      <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
                         BRAND LAUNCH & BOOTH SETUP
                       </span>
-                      <h4 className="text-xl font-bold text-slate-900">Fenty Skin</h4>
+                      <h4 className="text-xl font-bold text-slate-900 leading-tight">Fenty Skin</h4>
+                      <p className="text-slate-500 text-sm leading-relaxed">
+                        Premium cosmetic exhibition booth featuring elegant minimalist structures, interactive trials, and photography backdrops.
+                      </p>
                     </div>
-                    <p className="text-slate-500 text-sm leading-relaxed max-w-2xl">
-                      Premium cosmetic exhibition booth featuring elegant minimalist structures, interactive trials, and photography backdrops.
-                    </p>
-                    <div className="grid grid-cols-3 gap-3 max-w-3xl">
-                      {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg"].map((img, i) => (
-                        <div key={i} className="aspect-square rounded-xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
-                          <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
-                        </div>
-                      ))}
+                    <div className="w-full lg:w-[80%]">
+                      <div className="grid grid-cols-3 gap-3">
+                        {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg"].map((img, i) => (
+                          <div key={i} className="aspect-square rounded-xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
+                            <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </motion.div>
 
@@ -364,23 +368,25 @@ function HomePage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="space-y-4"
+                    className="flex flex-col lg:flex-row gap-8 items-start"
                   >
-                    <div>
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20 mb-2">
+                    <div className="w-full lg:w-[20%] space-y-3 shrink-0">
+                      <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-600 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
                         POP-UP STORE & EXHIBITION
                       </span>
-                      <h4 className="text-xl font-bold text-slate-900">Hirono @ Siam Square</h4>
+                      <h4 className="text-xl font-bold text-slate-900 leading-tight">Hirono @ Siam Square</h4>
+                      <p className="text-slate-500 text-sm leading-relaxed">
+                        Art toys pop-up exhibition in Siam Square, featuring character installations, concrete architectures, and fan galleries.
+                      </p>
                     </div>
-                    <p className="text-slate-500 text-sm leading-relaxed max-w-2xl">
-                      Art toys pop-up exhibition in Siam Square, featuring character installations, concrete architectures, and fan galleries.
-                    </p>
-                    <div className="grid grid-cols-3 gap-3 max-w-3xl">
-                      {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg"].map((img, i) => (
-                        <div key={i} className="aspect-square rounded-xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
-                          <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
-                        </div>
-                      ))}
+                    <div className="w-full lg:w-[80%]">
+                      <div className="grid grid-cols-3 gap-3">
+                        {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg"].map((img, i) => (
+                          <div key={i} className="aspect-square rounded-xl overflow-hidden border border-slate-200/50 shadow-sm group cursor-pointer bg-slate-100">
+                            <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </motion.div>
                 </div>
