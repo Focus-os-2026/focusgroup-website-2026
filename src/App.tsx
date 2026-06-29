@@ -283,6 +283,25 @@ function HomePage() {
             </div>
             <div className="space-y-32">
               <PortfolioItem 
+                id="organizer"
+                title="Event Organizer" 
+                description="We manage large-scale events from concept to execution, covering concerts, festivals, corporate events, and conferences. We bring your vision to life with precision and creativity."
+                images={[
+                  "/Event Organizer_1-1.jpeg",
+                  "/Event Organizer_7-1.jpeg",
+                  "/Event Organizer_6-1.jpeg",
+                  "/Event Organizer_5-1.jpeg",
+                  "/Event Organizer_3-1.jpeg",
+                  "/Event Organizer_4-1.jpeg",
+                  "/Event Organizer_2-1.jpeg",
+                  "/Event Organizer_8-1.jpeg"
+                ]} 
+                delay={0.1} 
+                primaryButtonText="View Projects"
+                showSecondaryButton={false}
+                link="/event-organizer"
+              />
+              <PortfolioItem 
                 id="organizer-novel"
                 title="มหกรรมนิยายนานาชาติ 2025" 
                 badge="BOOK EXPO & FESTIVAL"
@@ -292,10 +311,11 @@ function HomePage() {
                   "/images/projects/novel-2.jpg",
                   "/images/projects/novel-3.jpg"
                 ]} 
-                delay={0.1} 
+                delay={0.15} 
                 primaryButtonText="View Projects"
                 showSecondaryButton={false}
                 link="/event-organizer"
+                reverse
               />
               <PortfolioItem 
                 id="organizer-fenty"
@@ -311,7 +331,6 @@ function HomePage() {
                 primaryButtonText="View Projects"
                 showSecondaryButton={false}
                 link="/event-organizer"
-                reverse
               />
               <PortfolioItem 
                 id="organizer-hirono"
@@ -323,10 +342,11 @@ function HomePage() {
                   "/images/projects/hirono-2.jpg",
                   "/images/projects/hirono-3.jpg"
                 ]} 
-                delay={0.3} 
+                delay={0.25} 
                 primaryButtonText="View Projects"
                 showSecondaryButton={false}
                 link="/event-organizer"
+                reverse
               />
               <PortfolioItem 
                 id="supply"
