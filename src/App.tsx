@@ -378,9 +378,9 @@ function HomePage() {
                       </p>
                     </div>
                     <div className="w-full lg:w-[80%]">
-                      <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-3 gap-0 bg-slate-900">
-                        {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-[21/9] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(novelImages, i)}>
+                      <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
+                        {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg", "/images/projects/novel-4.jpg"].map((img, i) => (
+                          <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(novelImages, i)}>
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                               <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
@@ -411,9 +411,9 @@ function HomePage() {
                       </p>
                     </div>
                     <div className="w-full lg:w-[80%]">
-                      <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-3 gap-0 bg-slate-900">
-                        {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-[21/9] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(fentyImages, i)}>
+                      <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
+                        {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg", "/images/projects/fenty-4.jpg"].map((img, i) => (
+                          <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(fentyImages, i)}>
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                               <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
@@ -444,9 +444,9 @@ function HomePage() {
                       </p>
                     </div>
                     <div className="w-full lg:w-[80%]">
-                      <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-3 gap-0 bg-slate-900">
-                        {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-[21/9] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(hironoImages, i)}>
+                      <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
+                        {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg", "/images/projects/hirono-4.jpg"].map((img, i) => (
+                          <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(hironoImages, i)}>
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                               <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
