@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-heading: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Prompt", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-brand-white: #FFFFFF;
+  --color-brand-charcoal: #1F1F24;
+  --color-brand-purple: #7B6CFF;
+  --color-brand-lavender: #EDE9FF;
+  --color-brand-gray: #A7A9B2;
+}
+
+@layer base {
+  body {
+    @apply font-body bg-brand-white text-brand-charcoal;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
