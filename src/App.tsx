@@ -299,6 +299,7 @@ function HomePage() {
                 delay={0.1} 
                 primaryButtonText="View Projects"
                 showSecondaryButton={false}
+                link="/event-organizer"
               />
               <PortfolioItem 
                 id="supply"
