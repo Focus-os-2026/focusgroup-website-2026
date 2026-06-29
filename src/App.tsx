@@ -281,7 +281,7 @@ function HomePage() {
               <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">Our Portfolio</h2>
               <p className="text-slate-600 max-w-[1000px] mx-auto text-[17px] font-normal">Showcasing our work across event production, media, and immersive brand experiences.</p>
             </div>
-            <div className="space-y-32">
+            <div className="space-y-16 md:space-y-24">
               {/* Event Organizer Section Container */}
               <div className="space-y-16">
                 <PortfolioItem 
@@ -379,6 +379,7 @@ function HomePage() {
                   </motion.div>
                 </div>
               </div>
+              <hr className="border-t border-slate-300/60" />
               <PortfolioItem 
                 id="supply"
                 title="Event Supply" 
@@ -398,6 +399,7 @@ function HomePage() {
                 showSecondaryButton={false}
                 reverse
               />
+              <hr className="border-t border-slate-300/60" />
               <PortfolioItem 
                 id="media"
                 title="Media Production" 
@@ -408,6 +410,7 @@ function HomePage() {
                 primaryButtonText="View Projects"
                 showSecondaryButton={false}
               />
+              <hr className="border-t border-slate-300/60" />
               <PortfolioItem 
                 id="booth"
                 title="Booth & Exhibition" 
