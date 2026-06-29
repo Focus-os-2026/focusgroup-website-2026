@@ -328,137 +328,146 @@ function HomePage() {
         </section>
 
         {/* Works Section */}
-        <section id="portfolio" className="py-24 md:py-32 relative bg-[#F2F0EB]">
+        {/* Portfolio Header Section */}
+        <section id="portfolio" className="pt-24 pb-12 relative bg-[#F2F0EB]">
           <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
+            <div className="text-center">
               <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">Our Portfolio</h2>
               <p className="text-slate-600 max-w-[1000px] mx-auto text-[17px] font-normal">Showcasing our work across event production, media, and immersive brand experiences.</p>
             </div>
-            <div className="space-y-16 md:space-y-24">
-              {/* Event Organizer Section Container (Entirely wrapped in a Dark Card Container) */}
-              <div className="bg-slate-950 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-12 border border-slate-800/80 shadow-2xl shadow-slate-950/20 space-y-12">
-                <PortfolioItem 
-                  id="organizer"
-                  title="Event Organizer" 
-                  description="We manage large-scale events from concept to execution, covering concerts, festivals, corporate events, and conferences. We bring your vision to life with precision and creativity."
-                  images={[
-                    "/Event Organizer_1-1.jpeg",
-                    "/Event Organizer_7-1.jpeg",
-                    "/Event Organizer_6-1.jpeg",
-                    "/Event Organizer_5-1.jpeg",
-                    "/Event Organizer_3-1.jpeg",
-                    "/Event Organizer_4-1.jpeg",
-                    "/Event Organizer_2-1.jpeg",
-                    "/Event Organizer_8-1.jpeg"
-                  ]} 
-                  delay={0.1} 
-                  primaryButtonText="View Projects"
-                  showSecondaryButton={false}
-                  link="/event-organizer"
-                  darkTheme
-                />
-                
-                {/* Inner Projects List (Stacked Vertically) */}
-                <div className="flex flex-col gap-4 pt-12 border-t border-slate-800/50">
-                  {/* Novel Expo */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    className="flex flex-col lg:flex-row gap-8 items-start"
-                  >
-                    <div className="w-full lg:w-[20%] space-y-3 shrink-0">
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
-                        BOOK EXPO & FESTIVAL
-                      </span>
-                      <h4 className="text-xl md:text-2xl font-extrabold text-white leading-tight">มหกรรมนิยาย<br />นานาชาติ 2025</h4>
-                      <p className="text-slate-400 text-xs leading-relaxed">
-                        Large-scale book exhibition and reader experience, featuring custom stages, photo landmarks, and publisher booths.
-                      </p>
-                    </div>
-                    <div className="w-full lg:w-[80%]">
-                      <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
-                        {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg", "/images/projects/novel-4.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(novelImages, i)}>
-                            <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
-                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                              <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
+          </div>
+        </section>
 
-                  <hr className="border-t border-slate-800/50" />
-
-                  {/* Fenty Skin */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="flex flex-col lg:flex-row gap-8 items-start"
-                  >
-                    <div className="w-full lg:w-[20%] space-y-3 shrink-0">
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
-                        BRAND LAUNCH & BOOTH SETUP
-                      </span>
-                      <h4 className="text-xl md:text-2xl font-extrabold text-white leading-tight">Fenty Skin</h4>
-                      <p className="text-slate-400 text-xs leading-relaxed">
-                        Premium cosmetic exhibition booth featuring elegant minimalist structures, interactive trials, and photography backdrops.
-                      </p>
-                    </div>
-                    <div className="w-full lg:w-[80%]">
-                      <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
-                        {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg", "/images/projects/fenty-4.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(fentyImages, i)}>
-                            <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
-                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                              <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <hr className="border-t border-slate-800/50" />
-
-                  {/* Hirono */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    className="flex flex-col lg:flex-row gap-8 items-start"
-                  >
-                    <div className="w-full lg:w-[20%] space-y-3 shrink-0">
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
-                        POP-UP STORE & EXHIBITION
-                      </span>
-                      <h4 className="text-xl md:text-2xl font-extrabold text-white leading-tight">Hirono @ Siam Square</h4>
-                      <p className="text-slate-400 text-xs leading-relaxed">
-                        Art toys pop-up exhibition in Siam Square, featuring character installations, concrete architectures, and fan galleries.
-                      </p>
-                    </div>
-                    <div className="w-full lg:w-[80%]">
-                      <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
-                        {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg", "/images/projects/hirono-4.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(hironoImages, i)}>
-                            <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
-                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                              <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
+        {/* Event Organizer Section (Full-Width Dark Background) */}
+        <section className="py-24 bg-slate-950 border-y border-slate-900/60 text-white relative">
+          <div className="container mx-auto px-6 space-y-16">
+            <PortfolioItem 
+              id="organizer"
+              title="Event Organizer" 
+              description="We manage large-scale events from concept to execution, covering concerts, festivals, corporate events, and conferences. We bring your vision to life with precision and creativity."
+              images={[
+                "/Event Organizer_1-1.jpeg",
+                "/Event Organizer_7-1.jpeg",
+                "/Event Organizer_6-1.jpeg",
+                "/Event Organizer_5-1.jpeg",
+                "/Event Organizer_3-1.jpeg",
+                "/Event Organizer_4-1.jpeg",
+                "/Event Organizer_2-1.jpeg",
+                "/Event Organizer_8-1.jpeg"
+              ]} 
+              delay={0.1} 
+              primaryButtonText="View Projects"
+              showSecondaryButton={false}
+              link="/event-organizer"
+              darkTheme
+            />
+            
+            {/* Inner Projects List (Stacked Vertically) */}
+            <div className="flex flex-col gap-4 pt-12 border-t border-slate-800/50">
+              {/* Novel Expo */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="flex flex-col lg:flex-row gap-8 items-start"
+              >
+                <div className="w-full lg:w-[20%] space-y-3 shrink-0">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
+                    BOOK EXPO & FESTIVAL
+                  </span>
+                  <h4 className="text-xl md:text-2xl font-extrabold text-white leading-tight">มหกรรมนิยาย<br />นานาชาติ 2025</h4>
+                  <p className="text-slate-400 text-xs leading-relaxed">
+                    Large-scale book exhibition and reader experience, featuring custom stages, photo landmarks, and publisher booths.
+                  </p>
                 </div>
-              </div>
-              <hr className="border-t border-slate-300/60" />
+                <div className="w-full lg:w-[80%]">
+                  <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
+                    {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg", "/images/projects/novel-4.jpg"].map((img, i) => (
+                      <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(novelImages, i)}>
+                        <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+
+              <hr className="border-t border-slate-800/50" />
+
+              {/* Fenty Skin */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="flex flex-col lg:flex-row gap-8 items-start"
+              >
+                <div className="w-full lg:w-[20%] space-y-3 shrink-0">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
+                    BRAND LAUNCH & BOOTH SETUP
+                  </span>
+                  <h4 className="text-xl md:text-2xl font-extrabold text-white leading-tight">Fenty Skin</h4>
+                  <p className="text-slate-400 text-xs leading-relaxed">
+                    Premium cosmetic exhibition booth featuring elegant minimalist structures, interactive trials, and photography backdrops.
+                  </p>
+                </div>
+                <div className="w-full lg:w-[80%]">
+                  <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
+                    {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg", "/images/projects/fenty-4.jpg"].map((img, i) => (
+                      <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(fentyImages, i)}>
+                        <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+
+              <hr className="border-t border-slate-800/50" />
+
+              {/* Hirono */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="flex flex-col lg:flex-row gap-8 items-start"
+              >
+                <div className="w-full lg:w-[20%] space-y-3 shrink-0">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
+                    POP-UP STORE & EXHIBITION
+                  </span>
+                  <h4 className="text-xl md:text-2xl font-extrabold text-white leading-tight">Hirono @ Siam Square</h4>
+                  <p className="text-slate-400 text-xs leading-relaxed">
+                    Art toys pop-up exhibition in Siam Square, featuring character installations, concrete architectures, and fan galleries.
+                  </p>
+                </div>
+                <div className="w-full lg:w-[80%]">
+                  <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
+                    {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg", "/images/projects/hirono-4.jpg"].map((img, i) => (
+                      <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(hironoImages, i)}>
+                        <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Other Portfolio Items Section */}
+        <section className="py-24 md:py-32 relative bg-[#F2F0EB]">
+          <div className="container mx-auto px-6">
+            <div className="space-y-16 md:space-y-24">
               <PortfolioItem 
                 id="supply"
                 title="Event Supply" 
