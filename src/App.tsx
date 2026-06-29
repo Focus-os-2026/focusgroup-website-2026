@@ -28,7 +28,60 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import EventOrganizerPage from "./pages/EventOrganizer";
 
+const novelImages = [
+  "/images/projects/novel-1.jpg",
+  "/images/projects/novel-2.jpg",
+  "/images/projects/novel-3.jpg",
+  "/images/projects/novel-4.jpg",
+  "/images/projects/novel-5.jpg",
+  "/images/projects/novel-6.jpg"
+];
+
+const fentyImages = [
+  "/images/projects/fenty-1.jpg",
+  "/images/projects/fenty-2.jpg",
+  "/images/projects/fenty-3.jpg",
+  "/images/projects/fenty-4.jpg",
+  "/images/projects/fenty-5.jpg",
+  "/images/projects/fenty-6.jpg"
+];
+
+const hironoImages = [
+  "/images/projects/hirono-1.jpg",
+  "/images/projects/hirono-2.jpg",
+  "/images/projects/hirono-3.jpg",
+  "/images/projects/hirono-4.jpg",
+  "/images/projects/hirono-5.jpg",
+  "/images/projects/hirono-6.jpg"
+];
+
 function HomePage() {
+  const [activeProjectImages, setActiveProjectImages] = useState<string[]>([]);
+  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
+
+  const openLightbox = (images: string[], index: number) => {
+    setActiveProjectImages(images);
+    setActiveImageIndex(index);
+  };
+
+  const closeLightbox = () => {
+    setActiveImageIndex(null);
+  };
+
+  const nextImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (activeImageIndex !== null) {
+      setActiveImageIndex((prev) => (prev! + 1) % activeProjectImages.length);
+    }
+  };
+
+  const prevImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (activeImageIndex !== null) {
+      setActiveImageIndex((prev) => (prev! - 1 + activeProjectImages.length) % activeProjectImages.length);
+    }
+  };
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -326,8 +379,11 @@ function HomePage() {
                     <div className="w-full lg:w-[80%]">
                       <div className="rounded-2xl overflow-hidden border border-slate-200/50 shadow-md grid grid-cols-3 gap-0 bg-slate-100">
                         {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer">
+                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(novelImages, i)}>
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                              <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -354,8 +410,11 @@ function HomePage() {
                     <div className="w-full lg:w-[80%]">
                       <div className="rounded-2xl overflow-hidden border border-slate-200/50 shadow-md grid grid-cols-3 gap-0 bg-slate-100">
                         {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer">
+                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(fentyImages, i)}>
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                              <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -382,8 +441,11 @@ function HomePage() {
                     <div className="w-full lg:w-[80%]">
                       <div className="rounded-2xl overflow-hidden border border-slate-200/50 shadow-md grid grid-cols-3 gap-0 bg-slate-100">
                         {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg"].map((img, i) => (
-                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer">
+                          <div key={i} className="aspect-square overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(hironoImages, i)}>
                             <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                            <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                              <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -666,6 +728,62 @@ function HomePage() {
           </div>
         </div>
       </footer>
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {activeImageIndex !== null && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-md cursor-zoom-out"
+            onClick={closeLightbox}
+          >
+            {/* Close Button */}
+            <button 
+              className="absolute top-6 right-6 text-white hover:text-sky-400 p-2 transition-colors cursor-pointer"
+              onClick={closeLightbox}
+            >
+              <X className="w-8 h-8" />
+            </button>
+
+            {/* Navigation Buttons */}
+            <button 
+              className="absolute left-6 text-white hover:text-sky-400 p-3 bg-white/5 hover:bg-white/10 rounded-full transition-all cursor-pointer"
+              onClick={prevImage}
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+            <button 
+              className="absolute right-6 text-white hover:text-sky-400 p-3 bg-white/5 hover:bg-white/10 rounded-full transition-all cursor-pointer"
+              onClick={nextImage}
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+
+            {/* Lightbox Image */}
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="max-w-4xl max-h-[80vh] flex flex-col items-center relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img 
+                src={activeProjectImages[activeImageIndex]} 
+                alt="Enlarged gallery view" 
+                className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+              
+              {/* Indicator */}
+              <p className="text-center text-slate-400 text-sm mt-4 tracking-wider">
+                {activeImageIndex + 1} / {activeProjectImages.length}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
