@@ -283,21 +283,47 @@ function HomePage() {
             </div>
             <div className="space-y-32">
               <PortfolioItem 
-                id="organizer"
-                title="Event Organizer" 
-                description="We manage large-scale events from concept to execution, covering concerts, festivals, corporate events, and conferences. We bring your vision to life with precision and creativity."
+                id="organizer-novel"
+                title="มหกรรมนิยายนานาชาติ 2025" 
+                badge="BOOK EXPO & FESTIVAL"
+                description="Large-scale book exhibition and interactive fan experience, featuring custom-themed stages, publisher booths, and immersive reader zones."
                 images={[
                   "/images/projects/novel-1.jpg",
                   "/images/projects/novel-2.jpg",
-                  "/images/projects/novel-3.jpg",
+                  "/images/projects/novel-3.jpg"
+                ]} 
+                delay={0.1} 
+                primaryButtonText="View Projects"
+                showSecondaryButton={false}
+                link="/event-organizer"
+              />
+              <PortfolioItem 
+                id="organizer-fenty"
+                title="Fenty Skin" 
+                badge="BRAND LAUNCH & BOOTH SETUP"
+                description="Premium cosmetic display booth featuring clean minimalist aesthetics, interactive product trial zones, and elegant neon-lit photography backdrops."
+                images={[
                   "/images/projects/fenty-1.jpg",
                   "/images/projects/fenty-2.jpg",
-                  "/images/projects/fenty-3.jpg",
+                  "/images/projects/fenty-3.jpg"
+                ]} 
+                delay={0.2} 
+                primaryButtonText="View Projects"
+                showSecondaryButton={false}
+                link="/event-organizer"
+                reverse
+              />
+              <PortfolioItem 
+                id="organizer-hirono"
+                title="Hirono @ Siam Square" 
+                badge="POP-UP STORE & EXHIBITION"
+                description="Art toys pop-up exhibition in Siam Square, featuring giant character installations, custom concrete-style architectural structures, and fan experiential galleries."
+                images={[
                   "/images/projects/hirono-1.jpg",
                   "/images/projects/hirono-2.jpg",
                   "/images/projects/hirono-3.jpg"
                 ]} 
-                delay={0.1} 
+                delay={0.3} 
                 primaryButtonText="View Projects"
                 showSecondaryButton={false}
                 link="/event-organizer"
@@ -663,7 +689,7 @@ function StatItem({ value, label }: { value: string, label: string }) {
   );
 }
 
-function PortfolioItem({ title, description, images, videos, youtubeIds, delay, reverse = false, primaryButtonText = "View Case Study", showSecondaryButton = true, link, id }: { 
+function PortfolioItem({ title, description, images, videos, youtubeIds, delay, reverse = false, primaryButtonText = "View Case Study", showSecondaryButton = true, link, id, badge }: { 
   title: string, 
   description: string, 
   images: string[], 
@@ -674,7 +700,8 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
   primaryButtonText?: string,
   showSecondaryButton?: boolean,
   link?: string,
-  id?: string
+  id?: string,
+  badge?: string
 }) {
   return (
     <motion.div
@@ -689,7 +716,7 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
       <div className="w-full lg:w-[30%] space-y-8">
         <div className="space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-600 text-xs font-bold uppercase tracking-widest">
-            <Zap className="w-3 h-3" /> CORE SERVICE
+            <Zap className="w-3 h-3" /> {badge || "CORE SERVICE"}
           </div>
           <h3 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
             {title}
@@ -723,7 +750,7 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
 
       {/* Grid/Video Side */}
       <div className="w-full lg:w-[70%]">
-        <div className={`rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-300/50 bg-slate-100 ${youtubeIds && youtubeIds.length > 0 ? (youtubeIds.length > 1 ? 'grid grid-cols-1 md:grid-cols-2 gap-0' : 'aspect-video') : (images.length === 9 ? 'grid grid-cols-3 gap-0' : 'grid grid-cols-2 sm:grid-cols-4 gap-0')}`}>
+        <div className={`shadow-2xl shadow-slate-300/50 ${youtubeIds && youtubeIds.length > 0 ? ('rounded-[2.5rem] overflow-hidden bg-slate-100 ' + (youtubeIds.length > 1 ? 'grid grid-cols-1 md:grid-cols-2 gap-0' : 'aspect-video')) : (images.length === 3 ? 'grid grid-cols-3 gap-4 md:gap-6' : (images.length === 9 ? 'rounded-[2.5rem] overflow-hidden bg-slate-100 grid grid-cols-3 gap-0' : 'rounded-[2.5rem] overflow-hidden bg-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-0'))}`}>
           {youtubeIds && youtubeIds.length > 0 ? (
             youtubeIds.map((id, i) => (
               <div key={i} className="aspect-video">
@@ -764,7 +791,7 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: delay + (i * 0.05) }}
-                className="aspect-square overflow-hidden group"
+                className={`aspect-square overflow-hidden group ${images.length === 3 ? 'rounded-3xl border border-slate-200/50 shadow-md' : ''}`}
               >
                 <img 
                   src={img} 
