@@ -116,70 +116,42 @@ export default function EventOrganizerPage() {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               <ProjectGalleryBox 
-                title="The Laughing Cow" 
+                title="มหกรรมนิยายนานาชาติ 2025" 
                 images={[
                   "/Event Organizer_1.jpeg",
-                  "/Event Organizer_2.jpeg"
-                ]} 
-                delay={0.1} 
-              />
-              <ProjectGalleryBox 
-                title="Tech Innovation Summit" 
-                images={[
+                  "/Event Organizer_2.jpeg",
                   "/Event Organizer_3.jpeg",
-                  "/Event Organizer_4.jpeg"
-                ]} 
-                delay={0.2} 
-              />
-              <ProjectGalleryBox 
-                title="Luxury Brand Launch" 
-                images={[
+                  "/Event Organizer_4.jpeg",
                   "/Event Organizer_5.jpeg",
                   "/Event Organizer_6.jpeg"
                 ]} 
-                delay={0.3} 
-              />
-              <ProjectGalleryBox 
-                title="Global Esports Arena" 
-                images={[
-                  "/Event Organizer_7.jpeg",
-                  "/Event Organizer_8.jpeg"
-                ]} 
-                delay={0.4} 
-              />
-              <ProjectGalleryBox 
-                title="Corporate Gala Dinner" 
-                images={[
-                  "/Event Organizer_1.jpeg",
-                  "/Event Organizer_3.jpeg"
-                ]} 
                 delay={0.1} 
               />
               <ProjectGalleryBox 
-                title="Automotive Expo" 
+                title="Fenty Skin" 
                 images={[
+                  "/fenty-1.jpg",
+                  "/Event Organizer_1.jpeg",
                   "/Event Organizer_2.jpeg",
-                  "/Event Organizer_4.jpeg"
+                  "/Event Organizer_3.jpeg",
+                  "/Event Organizer_4.jpeg",
+                  "/Event Organizer_5.jpeg"
                 ]} 
                 delay={0.2} 
               />
               <ProjectGalleryBox 
-                title="Art & Culture Fair" 
+                title="Hirono @ Siam Square" 
                 images={[
-                  "/Event Organizer_5.jpeg",
-                  "/Event Organizer_7.jpeg"
-                ]} 
-                delay={0.3} 
-              />
-              <ProjectGalleryBox 
-                title="Wellness Retreat" 
-                images={[
-                  "/Event Organizer_6.jpeg",
+                  "/hirono-1.jpg",
+                  "/hirono-2.jpg",
+                  "/hirono-3.jpg",
+                  "/hirono-4.jpg",
+                  "/Event Organizer_7.jpeg",
                   "/Event Organizer_8.jpeg"
                 ]} 
-                delay={0.4} 
+                delay={0.3} 
               />
             </div>
           </div>
