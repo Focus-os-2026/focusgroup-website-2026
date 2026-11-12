@@ -1,19 +1,11 @@
-import { motion, AnimatePresence, useMotionValue, useTransform, animate, useInView } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { 
   Layout, 
-  TrendingUp, 
-  ShoppingCart, 
-  Headphones, 
   ArrowRight, 
-  Play,
-  CheckCircle2,
   Menu,
   X,
   Calendar,
   Video,
-  Radio,
-  MonitorSmartphone,
-  Target,
   Zap,
   Layers,
   Phone,
@@ -27,6 +19,11 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import EventOrganizerPage from "./pages/EventOrganizer";
+import EventSupplyPage from "./pages/EventSupply";
+import BoothExhibitionPage from "./pages/BoothExhibition";
+import MediaProductionPage from "./pages/MediaProduction";
+import FaqPage from "./pages/Faq";
+import { CompanyInfoBox } from "./components/CompanyInfoBox";
 
 const novelImages = [
   "/images/projects/novel-1.jpg",
@@ -58,6 +55,10 @@ const hironoImages = [
 function HomePage() {
   const [activeProjectImages, setActiveProjectImages] = useState<string[]>([]);
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    document.title = "รับจัดงานอีเวนต์ บูธนิทรรศการ และผลิตสื่อครบวงจร กรุงเทพฯ | Focusgroup Studio";
+  }, []);
 
   const openLightbox = (images: string[], index: number) => {
     setActiveProjectImages(images);
@@ -93,43 +94,71 @@ function HomePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navLinks = [
+    { label: "หน้าแรก", to: "/" },
+    { label: "รับจัดงานอีเวนต์", to: "/event-organizer" },
+    { label: "เช่าเวที แสง สี เสียง", to: "/event-supply" },
+    { label: "ทำบูธนิทรรศการ", to: "/booth-exhibition" },
+    { label: "ผลิตวิดีโอ & ไลฟ์สด", to: "/media-production" },
+    { label: "FAQ", to: "/faq" },
+  ];
+
+  const notableClients = [
+    "Herbalife",
+    "Garnier",
+    "Suntory",
+    "สกสว. (TSRI)",
+    "นายอินทร์ (อมรินทร์)",
+    "Fenty Skin",
+    "POP MART / Hirono",
+    "WCA",
+    "EGLN"
+  ];
+
   return (
     <div className="min-h-screen bg-[#020617] text-slate-50 font-sans selection:bg-sky-500/30">
       {/* Navigation */}
       <nav 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-slate-950/80 backdrop-blur-lg border-b border-white/10 py-3" : "bg-transparent py-6"
+          isScrolled ? "bg-slate-950/90 backdrop-blur-lg border-b border-white/10 py-3" : "bg-transparent py-6"
         }`}
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
-          <div className="flex items-center gap-2 group cursor-pointer">
-            <img src="/logo small_02.png" alt="FocusGroup Studio" className="h-10 md:h-12 object-contain" />
-          </div>
+          <Link to="/" className="flex items-center gap-2 group cursor-pointer">
+            <img src="/logo small_02.png" alt="Focusgroup Studio บริษัท โฟกัสกรุ๊ป สตูดิโอ จำกัด" className="h-10 md:h-12 object-contain" />
+          </Link>
 
-          <div className="hidden md:flex items-center gap-8">
-            {["Home", "Services", "Portfolio", "Contact"].map((item) => (
-              <a 
-                key={item} 
-                href={`#${item.toLowerCase()}`} 
+          <div className="hidden lg:flex items-center gap-7">
+            {navLinks.map((item) => (
+              <Link 
+                key={item.to} 
+                to={item.to} 
                 className="text-sm font-medium text-slate-300 hover:text-sky-400 transition-colors relative group"
               >
-                {item}
+                {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-sky-400 transition-all group-hover:w-full" />
-              </a>
+              </Link>
             ))}
+            <a 
+              href="#contact" 
+              className="text-sm font-medium text-slate-300 hover:text-sky-400 transition-colors"
+            >
+              ติดต่อเรา
+            </a>
           </div>
 
           <div className="hidden md:block">
             <a href="https://lin.ee/PEIHMBM" target="_blank" rel="noopener noreferrer">
               <Button className="bg-sky-500 hover:bg-sky-600 text-white rounded-full px-6 shadow-lg shadow-sky-500/20">
-                Get Started <ArrowRight className="ml-2 w-4 h-4" />
+                ทักมาคุยกันก่อนได้ <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </a>
           </div>
 
           <button 
-            className="md:hidden text-slate-300"
+            className="lg:hidden text-slate-300"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="เปิดเมนูนำทาง"
           >
             {mobileMenuOpen ? <X /> : <Menu />}
           </button>
@@ -140,20 +169,27 @@ function HomePage() {
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="md:hidden absolute top-full left-0 right-0 bg-slate-900 border-b border-white/10 p-6 flex flex-col gap-4"
+            className="lg:hidden absolute top-full left-0 right-0 bg-slate-900 border-b border-white/10 p-6 flex flex-col gap-4"
           >
-            {["Home", "Services", "Portfolio", "Contact"].map((item) => (
-              <a 
-                key={item} 
-                href={`#${item.toLowerCase()}`} 
-                className="text-lg font-medium text-slate-300"
+            {navLinks.map((item) => (
+              <Link 
+                key={item.to} 
+                to={item.to} 
+                className="text-base font-medium text-slate-200 hover:text-sky-400"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {item}
-              </a>
+                {item.label}
+              </Link>
             ))}
+            <a 
+              href="#contact" 
+              className="text-base font-medium text-slate-200 hover:text-sky-400"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              ติดต่อเรา
+            </a>
             <a href="https://lin.ee/PEIHMBM" target="_blank" rel="noopener noreferrer" className="w-full">
-              <Button className="bg-sky-500 w-full mt-2">Get Started</Button>
+              <Button className="bg-sky-500 w-full mt-2">ทักมาคุยกันก่อนได้</Button>
             </a>
           </motion.div>
         )}
@@ -168,51 +204,55 @@ function HomePage() {
             <div className="absolute inset-0 opacity-80">
               <img 
                 src="/hero_03.jpg" 
-                alt="Background" 
+                alt="บรรยากาศการจัดงานอีเวนต์ เวที แสง สี เสียง โดย Focusgroup Studio" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
             </div>
-            {/* Fade out at the bottom to transition to the rest of the page */}
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/20 to-slate-950" />
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/50 to-slate-950" />
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-600/10 blur-[120px] rounded-full" />
           </div>
 
           <div className="relative z-10">
-            {/* Hero Section */}
-            <section className="pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+            {/* Hero Section (Answer-first) */}
+            <section className="pt-32 pb-16 md:pt-44 md:pb-24 overflow-hidden">
               <div className="container mx-auto px-6 text-center">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <span className="inline-block py-1 px-4 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-sm font-semibold mb-6 tracking-wider uppercase">
-                    Event Organizer • Media Production • Equipment Supply
+                  <span className="inline-block py-1.5 px-4 rounded-full bg-sky-500/15 border border-sky-400/30 text-sky-300 text-xs md:text-sm font-semibold mb-6 tracking-wider uppercase">
+                    FOCUSGROUP STUDIO · บริษัท โฟกัสกรุ๊ป สตูดิโอ จำกัด
                   </span>
-                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.1]">
-                    FOCUSGROUP<br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600 text-glow">STUDIO</span>
-                  </h1>
-                  <p className="text-slate-400 text-lg md:text-xl max-w-3xl mx-auto mb-12 leading-relaxed">
-                    Creative Production & Event Experiences<br className="hidden md:block" />
-                    That Connect Brands with People
-                    <br /><br />
-                    <span className="text-[17px] text-slate-300 block max-w-4xl mx-auto">
-                      From concept to reality — we blend creativity with strategy<br />
-                      to deliver impactful events that bring your brand to life.
+                  <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 leading-[1.2] max-w-5xl mx-auto">
+                    รับจัดงานอีเวนต์ บูธนิทรรศการ และผลิตสื่อครบวงจร กรุงเทพฯ{" "}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-500 block mt-2">
+                      Focusgroup Studio
                     </span>
-                  </p>
+                  </h1>
+
+                  {/* Answer-first Opening Paragraph */}
+                  <div className="max-w-4xl mx-auto mb-10 bg-slate-900/75 backdrop-blur-md border border-white/15 rounded-3xl p-6 md:p-8 text-left md:text-center shadow-2xl">
+                    <p className="text-slate-100 text-base md:text-lg leading-relaxed">
+                      <strong>Focusgroup Studio (บริษัท โฟกัสกรุ๊ป สตูดิโอ จำกัด)</strong> เป็นบริษัทรับจัดงานอีเวนต์และโปรดักชันเฮาส์ในกรุงเทพฯ ก่อตั้งปี 2557 (2014) ดูแลงานครบตั้งแต่คิดคอนเซ็ปต์จนถึงหน้างาน ใน 4 บริการ คือ{" "}
+                      <Link to="/event-organizer" className="text-sky-400 underline underline-offset-4 hover:text-sky-300 font-semibold">รับจัดงานอีเวนต์</Link>{" "}
+                      <Link to="/event-supply" className="text-sky-400 underline underline-offset-4 hover:text-sky-300 font-semibold">ให้เช่าเวที แสง สี เสียง จอ LED</Link>{" "}
+                      <Link to="/booth-exhibition" className="text-sky-400 underline underline-offset-4 hover:text-sky-300 font-semibold">ออกแบบและผลิตบูธนิทรรศการ</Link> และ{" "}
+                      <Link to="/media-production" className="text-sky-400 underline underline-offset-4 hover:text-sky-300 font-semibold">ผลิตวิดีโอพร้อม Live Streaming</Link>{" "}
+                      ลูกค้าหลักคือแบรนด์สินค้าอุปโภคบริโภค (FMCG) ค้าปลีก และหน่วยงานรัฐ เช่น Herbalife, Garnier, Suntory และ สกสว. ตั้งอยู่ที่ซอยพัฒนาการ 50 เขตสวนหลวง รับงานทั่วประเทศ
+                    </p>
+                  </div>
                   
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#portfolio">
-                      <Button size="lg" className="bg-sky-500 hover:bg-sky-600 text-white rounded-full px-8 h-14 text-lg shadow-xl shadow-sky-500/25">
-                        View Works <ArrowRight className="ml-2 w-5 h-5" />
+                    <a href="https://lin.ee/PEIHMBM" target="_blank" rel="noopener noreferrer">
+                      <Button size="lg" className="bg-sky-500 hover:bg-sky-600 text-white rounded-full px-8 h-14 text-lg shadow-xl shadow-sky-500/25 font-bold">
+                        ทักมาคุยกันก่อนได้ <ArrowRight className="ml-2 w-5 h-5" />
                       </Button>
                     </a>
-                    <a href="https://lin.ee/PEIHMBM" target="_blank" rel="noopener noreferrer">
-                      <Button variant="outline" size="lg" className="rounded-full px-8 h-14 text-lg border-white/10 hover:bg-white/5 text-[#001d5b]">
-                        Start Project
+                    <a href="#portfolio">
+                      <Button variant="outline" size="lg" className="rounded-full px-8 h-14 text-lg border-white/20 bg-white/90 hover:bg-white text-slate-950 font-semibold">
+                        ดูผลงานของเรา
                       </Button>
                     </a>
                   </div>
@@ -220,52 +260,53 @@ function HomePage() {
               </div>
             </section>
 
-            {/* Spacer Section */}
-            <div className="h-24 md:h-48" />
-
-            {/* Features Section */}
-            <section id="services" className="py-24 md:py-32 relative">
+            {/* Features Section (4 Core Services linked to dedicated URLs) */}
+            <section id="services" className="py-16 md:py-24 relative">
               <div className="container mx-auto px-6">
+                <div className="text-center mb-12">
+                  <h2 className="text-2xl md:text-4xl font-bold text-white mb-3">4 บริการหลักครบวงจรในทีมเดียว</h2>
+                  <p className="text-slate-400 text-sm md:text-base">คลิกที่แต่ละบริการเพื่อดูขอบเขตงาน ผลงานจริง และคำถามที่พบบ่อย</p>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <FeatureCard 
                     icon={<Calendar className="w-6 h-6" />}
-                    title="Event Organizer"
-                    subtitle="Full-Service Planning & Execution"
+                    title="รับจัดงานอีเวนต์ครบวงจร"
+                    subtitle="Event Organizer"
                     description={[
-                      "We handle every stage from concept to on-site delivery, ensuring every event runs seamlessly and leaves a lasting impression."
+                      "รับจัดงานบริษัท เปิดตัวสินค้า สัมมนา กาลาดินเนอร์ และคอนเสิร์ต ดูแลตั้งแต่คอนเซ็ปต์ Run of Show จนถึงคุมคิววันงาน"
                     ]}
                     delay={0.1}
-                    href="#organizer"
+                    to="/event-organizer"
                   />
                   <FeatureCard 
                     icon={<Layers className="w-6 h-6" />}
-                    title="Event Supply"
-                    subtitle="Equipment, Structure & On-Site Production"
+                    title="ให้เช่าเวที แสง สี เสียง จอ LED"
+                    subtitle="Event Supply"
                     description={[
-                      "Professional staging, lighting, sound, and technical setups — managed end-to-end for flawless execution."
+                      "ให้เช่าและติดตั้งเวที โครงสร้างทรัส ระบบเสียง ระบบแสง และจอ LED พร้อมทีมช่างและทีมคุมหน้างานตลอดงาน"
                     ]}
                     delay={0.2}
-                    href="#supply"
-                  />
-                  <FeatureCard 
-                    icon={<Video className="w-6 h-6" />}
-                    title="Media Production"
-                    subtitle="Video, Motion Graphic & Visual Design"
-                    description={[
-                      "High-quality content crafted to elevate your brand across every platform."
-                    ]}
-                    delay={0.3}
-                    href="#media"
+                    to="/event-supply"
                   />
                   <FeatureCard 
                     icon={<Layout className="w-6 h-6" />}
-                    title="Booth & Exhibition"
-                    subtitle="Design, Production & Installation"
+                    title="ออกแบบและผลิตบูธนิทรรศการ"
+                    subtitle="Booth & Exhibition"
                     description={[
-                      "Eye-catching booths built to showcase your brand with bold visuals and smart functionality."
+                      "ทำครบตั้งแต่แบบ 3D กราฟิก ผลิตโครงสร้าง ติดตั้งหน้างานที่ QSNCC ไบเทค อิมแพค ห้าง และโรงแรม ไปจนถึงรื้อถอน"
+                    ]}
+                    delay={0.3}
+                    to="/booth-exhibition"
+                  />
+                  <FeatureCard 
+                    icon={<Video className="w-6 h-6" />}
+                    title="ผลิตวิดีโอ มอชันกราฟิก & ไลฟ์สด"
+                    subtitle="Media Production"
+                    description={[
+                      "ผลิตวิดีโอองค์กร โฆษณา ภาพเปิดงานบนจอ LED และ Live Streaming หลายกล้อง ทีมเดียวกับที่จัดงาน"
                     ]}
                     delay={0.4}
-                    href="#booth"
+                    to="/media-production"
                   />
                 </div>
               </div>
@@ -273,53 +314,98 @@ function HomePage() {
           </div>
         </div>
 
-        {/* Stats Section */}
-        <section className="py-20 bg-white border-y border-slate-100 relative overflow-hidden">
+        {/* Stats Section (Real Text for AI & Search Engines) */}
+        <section className="py-16 md:py-20 bg-white border-y border-slate-100 relative overflow-hidden text-slate-900">
           <div className="absolute inset-0 bg-sky-500/5 blur-[100px] rounded-full" />
           <div className="container mx-auto px-6 relative z-10">
+            <p className="sr-only">
+              จัดงานมาแล้ว 112+ งาน · ผลิตวิดีโอ 140+ ชิ้น · ไลฟ์สด 70+ ครั้ง · ประสบการณ์ 12 ปี
+            </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
-              <StatItem value="160+" label="Events" />
-              <StatItem value="60K+" label="Designs" />
-              <StatItem value="200+" label="Videos" />
-              <StatItem value="100+" label="Live Productions" />
+              <StatItem value="112+" label="จัดงานมาแล้ว (งาน)" />
+              <StatItem value="140+" label="ผลิตวิดีโอ (ชิ้น)" />
+              <StatItem value="70+" label="ไลฟ์สด (ครั้ง)" />
+              <StatItem value="12 ปี" label="ประสบการณ์ (ตั้งแต่ปี 2557)" />
             </div>
           </div>
         </section>
 
         {/* Client Logos Section */}
         <section className="py-24 bg-white overflow-hidden border-b border-slate-100">
-          <div className="container mx-auto px-6 mb-16 text-center">
-            <h2 className="text-sm font-bold text-sky-600 uppercase tracking-[0.4em] mb-4">Our Partners</h2>
-            <p className="text-3xl md:text-4xl font-bold text-slate-900">Trusted by Global Brands</p>
+          <div className="container mx-auto px-6 mb-12 text-center">
+            <h2 className="text-sm font-bold text-sky-600 uppercase tracking-[0.4em] mb-3">Our Clients & Partners</h2>
+            <p className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">ลูกค้าที่ไว้วางใจ Focusgroup Studio</p>
+            {/* Visible Client Names as Real Text for AI */}
+            <div className="flex flex-wrap items-center justify-center gap-2.5 max-w-4xl mx-auto">
+              {notableClients.map((brand) => (
+                <span
+                  key={brand}
+                  className="px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-xs md:text-sm font-semibold"
+                >
+                  {brand}
+                </span>
+              ))}
+            </div>
           </div>
           
           <div className="flex flex-col gap-8">
             <LogoRow 
               logos={[
-                "/Clients_1.png", "/Clients_2.png", "/Clients_3.png", "/Clients_4.png", "/Clients_5.png",
-                "/Clients_6.png", "/Clients_7.png", "/Clients_8.png", "/Clients_9.png", "/Clients_10.png"
+                { src: "/Clients_1.png", name: "Herbalife และลูกค้าแบรนด์ชั้นนำ 1" },
+                { src: "/Clients_2.png", name: "Garnier และลูกค้าแบรนด์ชั้นนำ 2" },
+                { src: "/Clients_3.png", name: "Suntory และลูกค้าแบรนด์ชั้นนำ 3" },
+                { src: "/Clients_4.png", name: "สกสว. (TSRI) และหน่วยงานภาครัฐ 4" },
+                { src: "/Clients_5.png", name: "นายอินทร์ อมรินทร์ 5" },
+                { src: "/Clients_6.png", name: "Fenty Skin 6" },
+                { src: "/Clients_7.png", name: "Hirono POP MART 7" },
+                { src: "/Clients_8.png", name: "WCA 8" },
+                { src: "/Clients_9.png", name: "EGLN 9" },
+                { src: "/Clients_10.png", name: "แบรนด์พันธมิตร Focusgroup Studio 10" }
               ]} 
               speed={40} 
             />
             <LogoRow 
               logos={[
-                "/Clients_11.png", "/Clients_12.png", "/Clients_13.png", "/Clients_14.png", "/Clients_15.png",
-                "/Clients_16.png", "/Clients_17.png", "/Clients_18.png", "/Clients_19.png", "/Clients_20.png"
+                { src: "/Clients_11.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 11" },
+                { src: "/Clients_12.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 12" },
+                { src: "/Clients_13.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 13" },
+                { src: "/Clients_14.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 14" },
+                { src: "/Clients_15.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 15" },
+                { src: "/Clients_16.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 16" },
+                { src: "/Clients_17.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 17" },
+                { src: "/Clients_18.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 18" },
+                { src: "/Clients_19.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 19" },
+                { src: "/Clients_20.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 20" }
               ]} 
               reverse 
               speed={45} 
             />
             <LogoRow 
               logos={[
-                "/Clients_21.png", "/Clients_22.png", "/Clients_23.png", "/Clients_24.png", "/Clients_25.png",
-                "/Clients_26.png", "/Clients_27.png", "/Clients_28.png", "/Clients_29.png", "/Clients_30.png"
+                { src: "/Clients_21.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 21" },
+                { src: "/Clients_22.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 22" },
+                { src: "/Clients_23.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 23" },
+                { src: "/Clients_24.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 24" },
+                { src: "/Clients_25.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 25" },
+                { src: "/Clients_26.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 26" },
+                { src: "/Clients_27.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 27" },
+                { src: "/Clients_28.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 28" },
+                { src: "/Clients_29.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 29" },
+                { src: "/Clients_30.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 30" }
               ]} 
               speed={42} 
             />
             <LogoRow 
               logos={[
-                "/Clients_31.png", "/Clients_32.png", "/Clients_33.png", "/Clients_34.png", "/Clients_35.png",
-                "/Clients_36.png", "/Clients_37.png", "/Clients_38.png", "/Clients_39.png"
+                { src: "/Clients_31.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 31" },
+                { src: "/Clients_32.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 32" },
+                { src: "/Clients_33.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 33" },
+                { src: "/Clients_34.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 34" },
+                { src: "/Clients_35.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 35" },
+                { src: "/Clients_36.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 36" },
+                { src: "/Clients_37.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 37" },
+                { src: "/Clients_38.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 38" },
+                { src: "/Clients_39.png", name: "ลูกค้าองค์กรของ Focusgroup Studio 39" }
               ]} 
               reverse 
               speed={48} 
@@ -328,12 +414,13 @@ function HomePage() {
         </section>
 
         {/* Works Section */}
-        {/* Portfolio Header Section */}
         <section id="portfolio" className="pt-24 pb-12 relative bg-[#F2F0EB]">
           <div className="container mx-auto px-6">
             <div className="text-center">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">Our Portfolio</h2>
-              <p className="text-slate-600 max-w-[1000px] mx-auto text-[17px] font-normal">Showcasing our work across event production, media, and immersive brand experiences.</p>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">ผลงานของเรา (Our Portfolio)</h2>
+              <p className="text-slate-600 max-w-[1000px] mx-auto text-[17px] font-normal">
+                ตัวอย่างผลงานจริงทั้งการจัดงานอีเวนต์ ให้เช่าเวที แสง สี เสียง จอ LED ออกแบบผลิตบูธนิทรรศการ และผลิตวิดีโอพร้อม Live Streaming
+              </p>
             </div>
           </div>
         </section>
@@ -343,26 +430,26 @@ function HomePage() {
           <div className="container mx-auto px-6 space-y-16">
             <PortfolioItem 
               id="organizer"
-              title="Event Organizer" 
-              description="We manage large-scale events from concept to execution, covering concerts, festivals, corporate events, and conferences. We bring your vision to life with precision and creativity."
+              title="รับจัดงานอีเวนต์ครบวงจร (Event Organizer)" 
+              description="Focusgroup Studio รับจัดงานอีเวนต์ครบวงจรในกรุงเทพฯ และต่างจังหวัด ทั้งงานบริษัท งานเปิดตัวสินค้า งานสัมมนา งานกาลาดินเนอร์ และคอนเสิร์ต เช่น งาน EGLN (2569) ที่โรงแรม Fairmont และงานประชุม WCA ที่ InterContinental"
               images={[
-                "/Event Organizer_1-1.jpeg",
-                "/Event Organizer_7-1.jpeg",
-                "/Event Organizer_6-1.jpeg",
-                "/Event Organizer_5-1.jpeg",
-                "/Event Organizer_3-1.jpeg",
-                "/Event Organizer_4-1.jpeg",
-                "/Event Organizer_2-1.jpeg",
-                "/Event Organizer_8-1.jpeg"
+                { src: "/Event Organizer_1-1.jpeg", alt: "งานจัดอีเวนต์และกาล่าดินเนอร์ EGLN โรงแรม Fairmont กรุงเทพฯ 2569" },
+                { src: "/Event Organizer_7-1.jpeg", alt: "งานประชุมสัมมนาองค์กรระดับนานาชาติ WCA โรงแรม InterContinental กรุงเทพฯ" },
+                { src: "/Event Organizer_6-1.jpeg", alt: "การแสดงโชว์บนเวทีและระบบแสงสีเสียงในงานเลี้ยงบริษัท กรุงเทพฯ" },
+                { src: "/Event Organizer_5-1.jpeg", alt: "บรรยากาศงานเปิดตัวสินค้าและอีเวนต์องค์กรโดย Focusgroup Studio" },
+                { src: "/Event Organizer_3-1.jpeg", alt: "ทีมรันคิวและควบคุมหน้างานอีเวนต์คอนเสิร์ตและเฟสติวัล" },
+                { src: "/Event Organizer_4-1.jpeg", alt: "การจัดงานประชุมและงานเลี้ยงรับรอง Welcome Cocktail & Award Dinner" },
+                { src: "/Event Organizer_2-1.jpeg", alt: "ออกแบบเวทีและจอ LED สำหรับงานสัมมนาและเปิดตัวแบรนด์" },
+                { src: "/Event Organizer_8-1.jpeg", alt: "งานอีเวนต์และกิจกรรมแบรนด์ครบวงจรในกรุงเทพฯ" }
               ]} 
               delay={0.1} 
-              primaryButtonText="View Projects"
-              showSecondaryButton={false}
+              primaryButtonText="ดูรายละเอียดบริการจัดงานอีเวนต์"
+              showSecondaryButton={true}
               link="/event-organizer"
               darkTheme
             />
             
-            {/* Inner Projects List (Stacked Vertically) */}
+            {/* Inner Projects List */}
             <div className="flex flex-col gap-4 pt-12 border-t border-slate-800/50">
               {/* Novel Expo */}
               <motion.div 
@@ -378,16 +465,16 @@ function HomePage() {
                   </span>
                   <h4 className="text-xl md:text-2xl font-extrabold text-white leading-tight">มหกรรมนิยาย<br />นานาชาติ 2025</h4>
                   <p className="text-slate-400 text-xs leading-relaxed">
-                    Large-scale book exhibition and reader experience, featuring custom stages, photo landmarks, and publisher booths.
+                    งานมหกรรมหนังสือและนิยายนานาชาติ ออกแบบเวทีกิจกรรม จุดถ่ายภาพแลนด์มาร์ก และโซนบูธสำนักพิมพ์
                   </p>
                 </div>
                 <div className="w-full lg:w-[80%]">
                   <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
                     {["/images/projects/novel-1.jpg", "/images/projects/novel-2.jpg", "/images/projects/novel-3.jpg", "/images/projects/novel-4.jpg"].map((img, i) => (
                       <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(novelImages, i)}>
-                        <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                        <img src={img} alt={`งานมหกรรมนิยายนานาชาติ 2025 กรุงเทพฯ ภาพที่ ${i + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                          <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
+                          <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">ดูรูปขยาย</span>
                         </div>
                       </div>
                     ))}
@@ -411,16 +498,16 @@ function HomePage() {
                   </span>
                   <h4 className="text-xl md:text-2xl font-extrabold text-white leading-tight">Fenty Skin</h4>
                   <p className="text-slate-400 text-xs leading-relaxed">
-                    Premium cosmetic exhibition booth featuring elegant minimalist structures, interactive trials, and photography backdrops.
+                    งานเปิดตัวและบูธแสดงสินค้า Fenty Skin โครงสร้างมินิมอล โซนทดลองผลิตภัณฑ์ และจุดถ่ายภาพ
                   </p>
                 </div>
                 <div className="w-full lg:w-[80%]">
                   <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
                     {["/images/projects/fenty-1.jpg", "/images/projects/fenty-2.jpg", "/images/projects/fenty-3.jpg", "/images/projects/fenty-4.jpg"].map((img, i) => (
                       <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(fentyImages, i)}>
-                        <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                        <img src={img} alt={`งานเปิดตัวและบูธ Fenty Skin กรุงเทพฯ ภาพที่ ${i + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                          <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
+                          <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">ดูรูปขยาย</span>
                         </div>
                       </div>
                     ))}
@@ -444,16 +531,16 @@ function HomePage() {
                   </span>
                   <h4 className="text-xl md:text-2xl font-extrabold text-white leading-tight">Hirono @ Siam Square</h4>
                   <p className="text-slate-400 text-xs leading-relaxed">
-                    Art toys pop-up exhibition in Siam Square, featuring character installations, concrete architectures, and fan galleries.
+                    นิทรรศการและป๊อปอัปสโตร์ Hirono ใจกลางสยามสแควร์ พร้อมงานโครงสร้างและแกลเลอรีจัดแสดง
                   </p>
                 </div>
                 <div className="w-full lg:w-[80%]">
                   <div className="rounded-2xl overflow-hidden border border-slate-800/80 shadow-md grid grid-cols-4 gap-0 bg-slate-900">
                     {["/images/projects/hirono-1.jpg", "/images/projects/hirono-2.jpg", "/images/projects/hirono-3.jpg", "/images/projects/hirono-4.jpg"].map((img, i) => (
                       <div key={i} className="aspect-[16/10] overflow-hidden group cursor-pointer relative" onClick={() => openLightbox(hironoImages, i)}>
-                        <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
+                        <img src={img} alt={`งานป๊อปอัปสโตร์และนิทรรศการ Hirono สยามสแควร์ กรุงเทพฯ ภาพที่ ${i + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" referrerPolicy="no-referrer" />
                         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                          <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View Photo</span>
+                          <span className="text-white text-xs font-semibold tracking-wider bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">ดูรูปขยาย</span>
                         </div>
                       </div>
                     ))}
@@ -470,52 +557,55 @@ function HomePage() {
             <div className="space-y-16 md:space-y-24">
               <PortfolioItem 
                 id="supply"
-                title="Event Supply" 
-                description="Professional event equipment and on-site production, including staging, lighting, sound, and technical systems. Our high-end inventory ensures your event looks and sounds world-class."
+                title="ให้เช่าเวที แสง สี เสียง จอ LED (Event Supply)" 
+                description="Focusgroup Studio ให้เช่าและติดตั้งอุปกรณ์งานอีเวนต์ครบชุดในกรุงเทพฯ และต่างจังหวัด ได้แก่ เวที โครงสร้าง ระบบเสียง ระบบแสง และจอ LED พร้อมทีมช่างและทีมคุมหน้างานตลอดงาน เช่าเฉพาะอุปกรณ์ หรือเช่าคู่กับบริการจัดงานก็ได้"
                 images={[
-                  "/Event Supply_1.jpg",
-                  "/Event Supply_2.jpg",
-                  "/Event Supply_3.jpeg",
-                  "/Event Supply_4.jpeg",
-                  "/Event Supply_5.jpeg",
-                  "/Event Supply_6.jpg",
-                  "/Event Supply_7.jpeg",
-                  "/Event Supply_1.jpg"
+                  { src: "/Event Supply_1.jpg", alt: "ให้เช่าและติดตั้งเวที แสง สี เสียง จอ LED งานอีเวนต์ กรุงเทพฯ 1" },
+                  { src: "/Event Supply_2.jpg", alt: "ระบบไฟแสงสี Moving Head และจอ LED บนเวทีคอนเสิร์ต 2" },
+                  { src: "/Event Supply_3.jpeg", alt: "ทีมช่างควบคุมระบบเสียงและภาพหน้างานอีเวนต์ 3" },
+                  { src: "/Event Supply_4.jpeg", alt: "ติดตั้งจอ LED และเวทีงานสัมมนาโรงแรม 4" },
+                  { src: "/Event Supply_5.jpeg", alt: "ระบบแสงสีเสียงงานกาลาดินเนอร์และงานเลี้ยงบริษัท 5" },
+                  { src: "/Event Supply_6.jpg", alt: "โครงสร้างทรัส เวที และระบบไฟงานเปิดตัวสินค้า 6" },
+                  { src: "/Event Supply_7.jpeg", alt: "อุปกรณ์ระบบภาพและเสียงครบวงจรโดย Focusgroup Studio 7" },
+                  { src: "/Event Supply_1.jpg", alt: "ทีมงานติดตั้งเวที แสง สี เสียง จอ LED มืออาชีพ 8" }
                 ]} 
                 delay={0.2} 
-                primaryButtonText="View Projects"
-                showSecondaryButton={false}
+                primaryButtonText="ดูรายละเอียดเช่าเวที แสง สี เสียง"
+                showSecondaryButton={true}
+                link="/event-supply"
                 reverse
               />
               <hr className="border-t border-slate-300/60" />
               <PortfolioItem 
                 id="media"
-                title="Media Production" 
-                description="Creative content production across video, motion graphics, and visual design to enhance brand communication. We tell stories that resonate and drive engagement."
+                title="ผลิตวิดีโอ มอชันกราฟิก และ Live Streaming" 
+                description="Focusgroup Studio รับผลิตวิดีโอองค์กร วิดีโอโฆษณา มอชันกราฟิก ภาพบนจอ LED สำหรับเวที และ Live Streaming งานอีเวนต์แบบหลายกล้อง ผลิตวิดีโอมาแล้ว 140+ ชิ้น และไลฟ์สด 70+ ครั้ง ทีมเดียวกับที่จัดงาน"
                 images={[]} 
                 youtubeIds={["Pv4kKCrR6Ow", "LZq2QiWzx5I", "t3NDTv8eMEU", "yuiBObMOt7o"]}
                 delay={0.3} 
-                primaryButtonText="View Projects"
-                showSecondaryButton={false}
+                primaryButtonText="ดูรายละเอียดงานวิดีโอ & ไลฟ์สด"
+                showSecondaryButton={true}
+                link="/media-production"
               />
               <hr className="border-t border-slate-300/60" />
               <PortfolioItem 
                 id="booth"
-                title="Booth & Exhibition" 
-                description="Design and build exhibition booths and display spaces that create strong brand presence and engagement. We turn floor space into immersive brand destinations."
+                title="ออกแบบและผลิตบูธนิทรรศการ (Booth & Exhibition)" 
+                description="Focusgroup Studio รับออกแบบ ผลิต และติดตั้งบูธนิทรรศการและบูธแสดงสินค้า สำหรับงานที่ศูนย์ประชุมแห่งชาติสิริกิติ์ (QSNCC) ไบเทค อิมแพค ห้างสรรพสินค้า และโรงแรมต่างจังหวัด เช่น บูธนายอินทร์ ที่ QSNCC (2569) และบูธ สกสว. ที่ Angsana Laguna Phuket (2569)"
                 images={[
-                  "/Booth_8.jpg",
-                  "/Booth_1.jpeg",
-                  "/Booth_4.jpeg",
-                  "/Booth_2.png",
-                  "/Booth_7.jpeg",
-                  "/Booth_3.png",
-                  "/Booth_5.jpeg",
-                  "/Booth_6.jpeg"
+                  { src: "/Booth_8.jpg", alt: "บูธนายอินทร์ มหกรรมหนังสือระดับชาติ ครั้งที่ 31 QSNCC 2569" },
+                  { src: "/Booth_1.jpeg", alt: "ออกแบบและผลิตบูธแสดงสินค้าโครงสร้างพิเศษ กรุงเทพฯ" },
+                  { src: "/Booth_4.jpeg", alt: "บูธนิทรรศการ สกสว. โรงแรม Angsana Laguna Phuket 2569" },
+                  { src: "/Booth_2.png", alt: "แบบ 3D บูธนิทรรศการและพื้นที่จัดแสดงสินค้า" },
+                  { src: "/Booth_7.jpeg", alt: "ติดตั้งบูธนิทรรศการที่ศูนย์ประชุมแห่งชาติสิริกิติ์และไบเทค" },
+                  { src: "/Booth_3.png", alt: "ออกแบบกราฟิกและโครงสร้างบูธนิทรรศการครบวงจร" },
+                  { src: "/Booth_5.jpeg", alt: "งานผลิตและติดตั้งบูธแสดงสินค้าสำหรับแบรนด์ชั้นนำ" },
+                  { src: "/Booth_6.jpeg", alt: "ทีมติดตั้งและรื้อถอนบูธนิทรรศการ Focusgroup Studio" }
                 ]} 
                 delay={0.4} 
-                primaryButtonText="View Projects"
-                showSecondaryButton={false}
+                primaryButtonText="ดูรายละเอียดทำบูธนิทรรศการ"
+                showSecondaryButton={true}
+                link="/booth-exhibition"
                 reverse
               />
             </div>
@@ -523,15 +613,15 @@ function HomePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-32 md:py-48 relative overflow-hidden">
+        <section className="py-28 md:py-36 relative overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img 
               src="/hero_03.jpg" 
-              alt="Background" 
+              alt="ติดต่อ Focusgroup Studio เพื่อปรึกษาการจัดงานอีเวนต์และทำบูธ" 
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />
-            <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-sm" />
           </div>
           
           <div className="container mx-auto px-6 relative z-10">
@@ -541,37 +631,46 @@ function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="text-5xl md:text-7xl font-bold mb-8 text-white leading-[1.1] tracking-tight"
+                className="text-4xl md:text-6xl font-bold mb-6 text-white leading-[1.2] tracking-tight"
               >
-                Let's Build Your Next Big Moment
+                มีโปรเจกต์ในใจ ทักมาคุยกันก่อนได้
               </motion.h2>
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-slate-300 text-xl md:text-2xl mb-12 max-w-2xl mx-auto font-light leading-relaxed"
+                className="text-slate-300 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-normal leading-relaxed"
               >
-                Trusted by hundreds of leading brands to deliver their most memorable experiences.
+                ยังไม่ต้องมีบรีฟครบ เราช่วยสรุปขอบเขตงานและจัดชุดอุปกรณ์ให้เหมาะกับงานของคุณก่อนทำใบเสนอราคา
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
+                className="flex flex-wrap justify-center gap-4"
               >
                 <a href="https://lin.ee/PEIHMBM" target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" className="bg-sky-500 hover:bg-sky-600 text-white rounded-full px-12 h-16 text-xl shadow-2xl shadow-sky-500/40 group">
-                    Get Quote <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                  <Button size="lg" className="bg-sky-500 hover:bg-sky-600 text-white rounded-full px-10 h-14 text-lg shadow-2xl shadow-sky-500/40 group font-bold">
+                    ทักมาคุยกันก่อนได้ทาง LINE <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </a>
+                <Link to="/faq">
+                  <Button variant="outline" size="lg" className="rounded-full px-8 h-14 text-lg border-white/20 bg-white/10 hover:bg-white/20 text-white">
+                    อ่านคำถามที่พบบ่อย (FAQ)
+                  </Button>
+                </Link>
               </motion.div>
             </div>
           </div>
         </section>
 
+        {/* Company Information Table (Matches Google Business Profile & FB) */}
+        <CompanyInfoBox dark />
+
         {/* Contact Section */}
-        <section id="contact" className="py-24 md:py-32 relative bg-slate-950 overflow-hidden">
+        <section id="contact" className="py-24 md:py-32 relative bg-slate-950 overflow-hidden border-t border-white/5">
           <div className="absolute top-0 right-0 w-[30%] h-[30%] bg-sky-600/5 blur-[120px] rounded-full" />
           <div className="absolute bottom-0 left-0 w-[30%] h-[30%] bg-blue-600/5 blur-[120px] rounded-full" />
           
@@ -583,10 +682,10 @@ function HomePage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <h2 className="text-sm font-bold text-sky-500 uppercase tracking-[0.4em] mb-4">Contact</h2>
-                <h3 className="text-4xl md:text-5xl font-bold mb-8">Get in touch with us</h3>
-                <p className="text-slate-400 text-lg mb-12 max-w-md leading-relaxed">
-                  Have a project in mind? We'd love to hear from you. Send us a message and we'll get back to you as soon as possible.
+                <h2 className="text-sm font-bold text-sky-500 uppercase tracking-[0.4em] mb-4">Contact Us</h2>
+                <h3 className="text-3xl md:text-5xl font-bold mb-6">ติดต่อ Focusgroup Studio</h3>
+                <p className="text-slate-400 text-base md:text-lg mb-10 max-w-lg leading-relaxed">
+                  บริษัท โฟกัสกรุ๊ป สตูดิโอ จำกัด พร้อมดูแลงานอีเวนต์ เช่าอุปกรณ์ บูธนิทรรศการ และผลิตสื่อครบวงจร ทักมาคุยไอเดียกันก่อนได้ทาง LINE หรือโทรศัพท์
                 </p>
                 
                 <div className="space-y-8">
@@ -595,8 +694,10 @@ function HomePage() {
                       <Phone className="w-6 h-6 text-sky-400 group-hover:text-white transition-colors" />
                     </div>
                     <div>
-                      <p className="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">Call Us</p>
-                      <p className="text-xl font-semibold text-slate-200">+66 86 744 4616</p>
+                      <p className="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">โทรศัพท์</p>
+                      <a href="tel:+66867444616" className="text-xl font-semibold text-slate-200 hover:text-sky-400 transition-colors">
+                        086-744-4616
+                      </a>
                     </div>
                   </div>
                   
@@ -605,8 +706,10 @@ function HomePage() {
                       <Mail className="w-6 h-6 text-sky-400 group-hover:text-white transition-colors" />
                     </div>
                     <div>
-                      <p className="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">Email Us</p>
-                      <p className="text-xl font-semibold text-slate-200">angkana@focusgroupstudio.com</p>
+                      <p className="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">อีเมล</p>
+                      <a href="mailto:angkana@focusgroupstudio.com" className="text-xl font-semibold text-slate-200 hover:text-sky-400 transition-colors">
+                        angkana@focusgroupstudio.com
+                      </a>
                     </div>
                   </div>
                   
@@ -615,22 +718,24 @@ function HomePage() {
                       <MapPin className="w-6 h-6 text-sky-400 group-hover:text-white transition-colors" />
                     </div>
                     <div>
-                      <p className="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">Visit Us</p>
-                      <p className="text-xl font-semibold text-slate-200">Bangkok, Thailand</p>
+                      <p className="text-xs text-slate-500 uppercase tracking-widest font-bold mb-1">ที่อยู่บริษัท</p>
+                      <p className="text-lg font-semibold text-slate-200">
+                        311 ซอยพัฒนาการ 50 แขวงพัฒนาการ เขตสวนหลวง กรุงเทพฯ 10250
+                      </p>
                     </div>
                   </div>
 
-                  <div className="pt-8">
+                  <div className="pt-4">
                     <div className="inline-block p-4 bg-white rounded-[2rem] shadow-xl shadow-sky-500/10 group hover:scale-105 transition-transform duration-500">
                       <div className="w-40 h-40 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center border border-slate-100">
                         <img 
                           src="/Qrcode_PYim.png" 
-                          alt="QR Code" 
+                          alt="LINE QR Code ติดต่อ Focusgroup Studio (lin.ee/PEIHMBM)" 
                           className="w-full h-full object-contain"
                           referrerPolicy="no-referrer"
                         />
                       </div>
-                      <p className="text-center text-slate-900 font-bold text-xs mt-3 tracking-widest uppercase">Scan to Connect</p>
+                      <p className="text-center text-slate-900 font-bold text-xs mt-3 tracking-widest uppercase">LINE: lin.ee/PEIHMBM</p>
                     </div>
                   </div>
                 </div>
@@ -645,43 +750,43 @@ function HomePage() {
               >
                 <div className="absolute -top-6 -right-6 w-24 h-24 bg-sky-500/10 blur-2xl rounded-full" />
                 
-                <form className="space-y-6 relative z-10">
+                <form className="space-y-6 relative z-10" onSubmit={(e) => { e.preventDefault(); window.open("https://lin.ee/PEIHMBM", "_blank"); }}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Name</label>
+                      <label className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">ชื่อผู้ติดต่อ</label>
                       <input 
                         type="text" 
-                        placeholder="Your Name"
+                        placeholder="ชื่อของคุณ / บริษัท"
                         className="w-full bg-slate-800/40 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:border-sky-500/50 transition-all duration-300 placeholder:text-slate-600"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Email</label>
+                      <label className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">เบอร์โทร / อีเมล</label>
                       <input 
-                        type="email" 
-                        placeholder="Your Email"
+                        type="text" 
+                        placeholder="เบอร์โทรศัพท์หรืออีเมล"
                         className="w-full bg-slate-800/40 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:border-sky-500/50 transition-all duration-300 placeholder:text-slate-600"
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Subject</label>
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">บริการที่สนใจ</label>
                     <input 
                       type="text" 
-                      placeholder="Project Subject"
+                      placeholder="เช่น จัดงานอีเวนต์ / เช่าจอ LED / ทำบูธนิทรรศการ / ไลฟ์สด"
                       className="w-full bg-slate-800/40 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:border-sky-500/50 transition-all duration-300 placeholder:text-slate-600"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Message</label>
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">รายละเอียดเบื้องต้น</label>
                     <textarea 
                       rows={4}
-                      placeholder="Tell us about your project..."
+                      placeholder="วันงานโดยประมาณ สถานที่ จำนวนแขก หรือไอเดียคร่าวๆ..."
                       className="w-full bg-slate-800/40 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:border-sky-500/50 transition-all duration-300 placeholder:text-slate-600 resize-none"
                     />
                   </div>
-                  <Button className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-2xl h-16 text-lg font-bold shadow-xl shadow-sky-500/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
-                    Send Message
+                  <Button type="submit" className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-2xl h-16 text-lg font-bold shadow-xl shadow-sky-500/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
+                    ทักมาคุยกันก่อนได้ทาง LINE
                   </Button>
                 </form>
               </motion.div>
@@ -696,52 +801,49 @@ function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
             <div className="col-span-1 md:col-span-1">
               <div className="flex items-center gap-2 mb-6">
-                <img src="/logo small_02.png" alt="FocusGroup Studio" className="h-10 object-contain" />
+                <img src="/logo small_02.png" alt="Focusgroup Studio บริษัท โฟกัสกรุ๊ป สตูดิโอ จำกัด" className="h-10 object-contain" />
               </div>
+              <p className="text-slate-300 font-semibold text-sm mb-2">
+                Focusgroup Studio (บริษัท โฟกัสกรุ๊ป สตูดิโอ จำกัด)
+              </p>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Creative Production & Event Experience That Connect Brands to People.
+                311 ซอยพัฒนาการ 50 แขวงพัฒนาการ เขตสวนหลวง กรุงเทพฯ 10250
               </p>
             </div>
             
             <div>
-              <h4 className="font-bold mb-6">Services</h4>
-              <ul className="space-y-4 text-sm text-slate-400">
-                <li><a href="#portfolio" className="hover:text-sky-400 transition-colors">Event Organizer</a></li>
-                <li><a href="#portfolio" className="hover:text-sky-400 transition-colors">Event Supply</a></li>
-                <li><a href="#portfolio" className="hover:text-sky-400 transition-colors">Media Production</a></li>
-                <li><a href="#portfolio" className="hover:text-sky-400 transition-colors">Booth & Exhibition</a></li>
+              <h4 className="font-bold mb-6">บริการของเรา (Services)</h4>
+              <ul className="space-y-3 text-sm text-slate-400">
+                <li><Link to="/event-organizer" className="hover:text-sky-400 transition-colors">รับจัดงานอีเวนต์ครบวงจร (Event Organizer)</Link></li>
+                <li><Link to="/event-supply" className="hover:text-sky-400 transition-colors">ให้เช่าเวที แสง สี เสียง จอ LED (Event Supply)</Link></li>
+                <li><Link to="/booth-exhibition" className="hover:text-sky-400 transition-colors">ออกแบบและผลิตบูธนิทรรศการ (Booth & Exhibition)</Link></li>
+                <li><Link to="/media-production" className="hover:text-sky-400 transition-colors">ผลิตวิดีโอ มอชันกราฟิก และ Live Streaming</Link></li>
+                <li><Link to="/faq" className="hover:text-sky-400 transition-colors">คำถามที่พบบ่อย (FAQ)</Link></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="font-bold mb-6">Contact Us</h4>
-              <ul className="space-y-4 text-sm text-slate-400">
-                <li className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
-                    <Phone className="w-4 h-4 text-sky-400" />
-                  </div>
-                  <span className="text-base">+66 86 744 4616</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
-                    <Mail className="w-4 h-4 text-sky-400" />
-                  </div>
-                  <span className="text-base">angkana@focusgroupstudio.com</span>
-                </li>
+              <h4 className="font-bold mb-6">ช่องทางติดต่อ (Contact)</h4>
+              <ul className="space-y-3 text-sm text-slate-400">
+                <li>โทร: <a href="tel:+66867444616" className="text-slate-200 hover:text-sky-400">086-744-4616</a></li>
+                <li>อีเมล: <a href="mailto:angkana@focusgroupstudio.com" className="text-slate-200 hover:text-sky-400">angkana@focusgroupstudio.com</a></li>
+                <li>LINE: <a href="https://lin.ee/PEIHMBM" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline">lin.ee/PEIHMBM</a></li>
+                <li>Facebook: <a href="https://www.facebook.com/FocusGroupth" target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline">facebook.com/FocusGroupth</a></li>
               </ul>
             </div>
           </div>
           
           <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-slate-500 text-xs gap-4">
-            <p>© 2026 FOCUSGROUP STUDIO. All rights reserved.</p>
-            <div className="flex gap-8">
-              <a href="#" className="hover:text-slate-300">Privacy Policy</a>
-              <a href="#" className="hover:text-slate-300">Terms of Service</a>
-              <a href="#" className="hover:text-slate-300">Cookie Policy</a>
+            <p>© 2026 Focusgroup Studio (บริษัท โฟกัสกรุ๊ป สตูดิโอ จำกัด). All rights reserved.</p>
+            <div className="flex gap-6">
+              <Link to="/faq" className="hover:text-slate-300">คำถามที่พบบ่อย (FAQ)</Link>
+              <a href="https://www.facebook.com/FocusGroupth" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">Facebook</a>
+              <a href="https://lin.ee/PEIHMBM" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">LINE Official</a>
             </div>
           </div>
         </div>
       </footer>
+
       {/* Lightbox Modal */}
       <AnimatePresence>
         {activeImageIndex !== null && (
@@ -752,7 +854,6 @@ function HomePage() {
             className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-md cursor-zoom-out"
             onClick={closeLightbox}
           >
-            {/* Close Button */}
             <button 
               className="absolute top-6 right-6 text-white hover:text-sky-400 p-2 transition-colors cursor-pointer"
               onClick={closeLightbox}
@@ -760,7 +861,6 @@ function HomePage() {
               <X className="w-8 h-8" />
             </button>
 
-            {/* Navigation Buttons */}
             <button 
               className="absolute left-6 text-white hover:text-sky-400 p-3 bg-white/5 hover:bg-white/10 rounded-full transition-all cursor-pointer"
               onClick={prevImage}
@@ -774,7 +874,6 @@ function HomePage() {
               <ChevronRight className="w-8 h-8" />
             </button>
 
-            {/* Lightbox Image */}
             <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -785,12 +884,11 @@ function HomePage() {
             >
               <img 
                 src={activeProjectImages[activeImageIndex]} 
-                alt="Enlarged gallery view" 
+                alt="ภาพขยายผลงาน Focusgroup Studio" 
                 className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
                 referrerPolicy="no-referrer"
               />
               
-              {/* Indicator */}
               <p className="text-center text-slate-400 text-sm mt-4 tracking-wider">
                 {activeImageIndex + 1} / {activeProjectImages.length}
               </p>
@@ -802,35 +900,33 @@ function HomePage() {
   );
 }
 
-function FeatureCard({ icon, title, subtitle, description, delay, href, active = false }: { 
+function FeatureCard({ icon, title, subtitle, description, delay, to }: { 
   icon: React.ReactNode, 
   title: string, 
   subtitle: string,
   description: string[], 
   delay: number, 
-  href?: string,
-  active?: boolean 
+  to: string
 }) {
   const CardContent = (
-    <Card className="h-full p-10 transition-all duration-500 border-white/20 group hover:-translate-y-2 flex flex-col bg-slate-800/50 backdrop-blur-md hover:bg-sky-600 hover:border-sky-400/50 hover:shadow-2xl hover:shadow-sky-600/20 text-slate-200 hover:text-white cursor-pointer">
-      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-all duration-500 bg-sky-500/20 text-sky-400 group-hover:bg-white/20 group-hover:text-white group-hover:scale-110`}>
-        {React.cloneElement(icon as React.ReactElement, { className: "w-8 h-8" })}
+    <Card className="h-full p-8 md:p-10 transition-all duration-500 border-white/20 group hover:-translate-y-2 flex flex-col bg-slate-800/60 backdrop-blur-md hover:bg-sky-600 hover:border-sky-400/50 hover:shadow-2xl hover:shadow-sky-600/20 text-slate-200 hover:text-white cursor-pointer">
+      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 bg-sky-500/20 text-sky-400 group-hover:bg-white/20 group-hover:text-white group-hover:scale-110">
+        {React.cloneElement(icon as React.ReactElement, { className: "w-7 h-7" })}
       </div>
-      <h3 className={`text-2xl md:text-3xl font-bold mb-3 text-slate-100 group-hover:text-white transition-colors duration-500`}>{title}</h3>
-      <p className={`text-base md:text-lg font-semibold mb-6 text-sky-300 group-hover:text-sky-100 transition-colors duration-500`}>
+      <h3 className="text-xl md:text-2xl font-bold mb-2 text-slate-100 group-hover:text-white transition-colors duration-500">{title}</h3>
+      <p className="text-sm font-semibold mb-4 text-sky-300 group-hover:text-sky-100 transition-colors duration-500">
         {subtitle}
       </p>
-      <div className={`space-y-4 flex-grow text-slate-300 group-hover:text-sky-50 transition-colors duration-500`}>
+      <div className="space-y-3 flex-grow text-slate-300 group-hover:text-sky-50 transition-colors duration-500">
         {description.map((line, idx) => (
-          <p key={idx} className="text-sm md:text-base leading-relaxed">
+          <p key={idx} className="text-sm leading-relaxed">
             {line}
           </p>
         ))}
       </div>
-      <div className="mt-10 flex items-center gap-1.5">
-        <div className={`w-2 h-2 rounded-full bg-sky-500 group-hover:bg-white transition-colors duration-500`} />
-        <div className={`w-2 h-2 rounded-full opacity-40 bg-sky-500 group-hover:bg-white transition-colors duration-500`} />
-        <div className={`w-2 h-2 rounded-full opacity-20 bg-sky-500 group-hover:bg-white transition-colors duration-500`} />
+      <div className="mt-8 flex items-center gap-2 text-xs font-bold text-sky-400 group-hover:text-white">
+        <span>ดูรายละเอียดบริการ</span>
+        <ArrowRight className="w-4 h-4" />
       </div>
     </Card>
   );
@@ -843,54 +939,30 @@ function FeatureCard({ icon, title, subtitle, description, delay, href, active =
       transition={{ duration: 0.5, delay }}
       className="h-full"
     >
-      {href ? (
-        <a href={href} className="block h-full">
-          {CardContent}
-        </a>
-      ) : (
-        CardContent
-      )}
+      <Link to={to} className="block h-full">
+        {CardContent}
+      </Link>
     </motion.div>
   );
 }
 
 function StatItem({ value, label }: { value: string, label: string }) {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  
-  // Parse numeric value and suffix
-  const numericValue = parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
-  const suffix = value.replace(/[0-9.]/g, '');
-  
-  const count = useMotionValue(numericValue * 0.7); // Start from 70%
-  const rounded = useTransform(count, (latest) => Math.round(latest));
-
-  React.useEffect(() => {
-    if (isInView) {
-      animate(count, numericValue, {
-        duration: 2.5,
-        ease: "easeOut",
-      });
-    }
-  }, [isInView, count, numericValue]);
-
   return (
-    <div className="group" ref={ref}>
+    <div className="group">
       <div className="text-4xl md:text-6xl font-extrabold text-slate-900 mb-2 group-hover:text-sky-600 transition-colors duration-500 flex items-center justify-center">
-        <motion.span>{rounded}</motion.span>
-        <span>{suffix}</span>
+        <span>{value}</span>
       </div>
-      <div className="text-slate-500 uppercase tracking-widest text-xs font-bold">
+      <div className="text-slate-600 uppercase tracking-wider text-xs md:text-sm font-bold">
         {label}
       </div>
     </div>
   );
 }
 
-function PortfolioItem({ title, description, images, videos, youtubeIds, delay, reverse = false, primaryButtonText = "View Case Study", showSecondaryButton = true, link, id, badge, darkTheme }: { 
+function PortfolioItem({ title, description, images, videos, youtubeIds, delay, reverse = false, primaryButtonText = "ดูรายละเอียด", showSecondaryButton = true, link, id, badge, darkTheme }: { 
   title: string, 
   description: string, 
-  images: string[], 
+  images: { src: string; alt: string }[], 
   videos?: string[],
   youtubeIds?: string[],
   delay: number,
@@ -912,35 +984,35 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
       className={`flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-12 lg:gap-20`}
     >
       {/* Content Side */}
-      <div className="w-full lg:w-[30%] space-y-8">
+      <div className="w-full lg:w-[32%] space-y-8">
         <div className="space-y-4">
           <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border ${darkTheme ? 'bg-sky-500/10 border-sky-500/20 text-sky-400' : 'bg-sky-500/10 border-sky-500/20 text-sky-600'} text-xs font-bold uppercase tracking-widest`}>
             <Zap className="w-3 h-3" /> {badge || "CORE SERVICE"}
           </div>
-          <h3 className={`text-4xl md:text-5xl font-bold leading-tight ${darkTheme ? 'text-white' : 'text-slate-900'}`}>
+          <h3 className={`text-3xl md:text-4xl font-bold leading-tight ${darkTheme ? 'text-white' : 'text-slate-900'}`}>
             {title}
           </h3>
-          <p className={`text-[15px] leading-relaxed max-w-xl ${darkTheme ? 'text-slate-400' : 'text-slate-600'}`}>
+          <p className={`text-[15px] leading-relaxed max-w-xl ${darkTheme ? 'text-slate-300' : 'text-slate-700'}`}>
             {description}
           </p>
         </div>
         
-        <div className="flex flex-wrap gap-4 pt-4">
+        <div className="flex flex-wrap gap-4 pt-2">
           {link ? (
             <Link to={link}>
-              <Button className={`${darkTheme ? 'bg-white hover:bg-slate-100 text-slate-950' : 'bg-slate-900 hover:bg-slate-800 text-white'} rounded-full px-8 h-12`}>
+              <Button className={`${darkTheme ? 'bg-white hover:bg-slate-100 text-slate-950' : 'bg-slate-900 hover:bg-slate-800 text-white'} rounded-full px-7 h-12 font-semibold`}>
                 {primaryButtonText}
               </Button>
             </Link>
           ) : (
-            <Button className={`${darkTheme ? 'bg-white hover:bg-slate-100 text-slate-950' : 'bg-slate-900 hover:bg-slate-800 text-white'} rounded-full px-8 h-12`}>
+            <Button className={`${darkTheme ? 'bg-white hover:bg-slate-100 text-slate-950' : 'bg-slate-900 hover:bg-slate-800 text-white'} rounded-full px-7 h-12 font-semibold`}>
               {primaryButtonText}
             </Button>
           )}
           {showSecondaryButton && (
             <a href="https://lin.ee/PEIHMBM" target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className={`${darkTheme ? 'border-slate-800 text-white hover:bg-white/5' : 'border-slate-200 text-slate-900 hover:bg-slate-50'} rounded-full px-8 h-12`}>
-                Get a Quote
+              <Button variant="outline" className={`${darkTheme ? 'border-slate-700 text-white hover:bg-white/10' : 'border-slate-300 text-slate-900 hover:bg-white'} rounded-full px-7 h-12 font-semibold`}>
+                ทักมาคุยกันก่อนได้
               </Button>
             </a>
           )}
@@ -948,14 +1020,14 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
       </div>
 
       {/* Grid/Video Side */}
-      <div className="w-full lg:w-[70%]">
+      <div className="w-full lg:w-[68%]">
         <div className={`shadow-2xl shadow-slate-300/50 ${youtubeIds && youtubeIds.length > 0 ? ('rounded-[2.5rem] overflow-hidden bg-slate-100 ' + (youtubeIds.length > 1 ? 'grid grid-cols-1 md:grid-cols-2 gap-0' : 'aspect-video')) : (images.length === 3 ? 'grid grid-cols-3 gap-4 md:gap-6' : (images.length === 9 ? 'rounded-[2.5rem] overflow-hidden bg-slate-100 grid grid-cols-3 gap-0' : 'rounded-[2.5rem] overflow-hidden bg-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-0'))}`}>
           {youtubeIds && youtubeIds.length > 0 ? (
             youtubeIds.map((id, i) => (
               <div key={i} className="aspect-video">
                 <iframe 
                   src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&modestbranding=1&rel=0`}
-                  title={`${title} ${i + 1}`}
+                  title={`${title} วิดีโอผลงานที่ ${i + 1}`}
                   className="w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -993,8 +1065,8 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
                 className={`aspect-square overflow-hidden group ${images.length === 3 ? 'rounded-3xl border border-slate-200/50 shadow-md' : ''}`}
               >
                 <img 
-                  src={img} 
-                  alt={`${title} ${i + 1}`} 
+                  src={img.src} 
+                  alt={img.alt} 
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   referrerPolicy="no-referrer"
                 />
@@ -1007,7 +1079,7 @@ function PortfolioItem({ title, description, images, videos, youtubeIds, delay, 
   );
 }
 
-function LogoRow({ logos, reverse = false, speed = 40 }: { logos: string[], reverse?: boolean, speed?: number }) {
+function LogoRow({ logos, reverse = false, speed = 40 }: { logos: { src: string; name: string }[], reverse?: boolean, speed?: number }) {
   return (
     <div className="flex overflow-hidden py-2 select-none">
       <motion.div
@@ -1025,10 +1097,10 @@ function LogoRow({ logos, reverse = false, speed = 40 }: { logos: string[], reve
         className="flex flex-none gap-16 items-center"
       >
         {[...logos, ...logos, ...logos, ...logos].map((logo, i) => (
-          <div key={i} className="w-32 h-12 md:w-40 md:h-16 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 opacity-40 hover:opacity-100">
+          <div key={i} className="w-32 h-12 md:w-40 md:h-16 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100">
             <img 
-              src={logo} 
-              alt="Client Logo" 
+              src={logo.src} 
+              alt={`โลโก้ลูกค้า ${logo.name}`} 
               className="max-w-full max-h-full object-contain" 
               referrerPolicy="no-referrer" 
             />
@@ -1045,6 +1117,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/event-organizer" element={<EventOrganizerPage />} />
+        <Route path="/event-supply" element={<EventSupplyPage />} />
+        <Route path="/booth-exhibition" element={<BoothExhibitionPage />} />
+        <Route path="/media-production" element={<MediaProductionPage />} />
+        <Route path="/faq" element={<FaqPage />} />
       </Routes>
     </BrowserRouter>
   );

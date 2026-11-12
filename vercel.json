@@ -11,5 +11,31 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/event-organizer",
+      "destination": "/event-organizer.html"
+    },
+    {
+      "source": "/event-supply",
+      "destination": "/event-supply.html"
+    },
+    {
+      "source": "/booth-exhibition",
+      "destination": "/booth-exhibition.html"
+    },
+    {
+      "source": "/media-production",
+      "destination": "/media-production.html"
+    },
+    {
+      "source": "/faq",
+      "destination": "/faq.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
